@@ -1,6 +1,6 @@
 # docker-private
 
-## orgnisation WIP 
+## Orgnisation WIP 
 
 - docker-compose/test, For testing Phraseanet in diferent archi/version 
                        (ex : load balanced , elasticsearch clutser , but only Ok deployment.
@@ -15,10 +15,23 @@
 
 Every deploiment used the futur Phraseanet image publish on docker hub.
 
-## more 
+## More 
 see also doc in confluence 
 
 https://phraseanet.atlassian.net/wiki/spaces/PHRAS/pages/573571073/Docker+notes+de+formations+du+10+d+cembre+2018
+
+## To do  
+
+For dev deployment
+
+add to git ignore, all containers  generated files
+ - mysql database
+ - Phraseanet source
+ - elasticindex
+
+Publish demo on public repo.
+
+
 
 ## Complement
 
