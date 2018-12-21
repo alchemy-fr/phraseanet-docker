@@ -35,8 +35,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-     - ./db:/docker-entrypoint-initdb.d
-     - ../mysql:/var/lib/mysql
+     - ${fs_mysql_init}:/docker-entrypoint-initdb.d
+     - ${fs_mysql}:/var/lib/mysql
      
   elasticsearch:
     build: elasticsearch/.
@@ -44,7 +44,7 @@ services:
     ports:
       - 9200:9200
     volumes:
-      - ../elasticsearch:/usr/share/elasticsearch/data
+      - ${fs_elasticsearch}:/usr/share/elasticsearch/data
 
 
 
@@ -53,5 +53,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/sebmaster/Documents/projets/phraseanet3/phraseanet/
+      device: ${fs_phraseanet}
       o: bind
