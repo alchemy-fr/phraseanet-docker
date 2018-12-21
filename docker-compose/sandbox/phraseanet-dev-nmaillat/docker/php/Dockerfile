@@ -74,6 +74,8 @@ COPY configuration.yml /var/configuration.yml
 COPY proxies /var/proxies
 
 RUN apt-get install nano
+RUN apt-get install git
+RUN apt-get install supervisor
 
 RUN apt-get autoremove -y \
 && apt-get clean all \
