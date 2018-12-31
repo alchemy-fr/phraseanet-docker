@@ -2,15 +2,35 @@
 
 set -e
 
-if [ ! -f "/var/Phraseanet/README.md" ]
+
+if [ ! -d "/var/Phraseanet/www" ]
 then
-	curl -o /tmp/Phraseanet.zip https://www.phraseanet.com/builds/alchemy-fr-Phraseanet-v4.0.3.zip
-	unzip /tmp/Phraseanet.zip -d /var/ 2> /dev/null || true
-	cp /var/configuration-compiled.php /var/Phraseanet/config/configuration-compiled.php
-    cp /var/configuration.yml /var/Phraseanet/config/configuration.yml
-    cp /var/proxies/* /var/Phraseanet/resources/proxies/
+		
+	git clone https://github.com/alchemy-fr/Phraseanet.git /tmp/Phraseanet
+	#cd /var/Phraseanet/
+	#git init
+    #git remote add origin https://github.com/alchemy-fr/Phraseanet.git 
+    #git pull origin master
+    mv /tmp/Phraseanet/* /var/Phraseanet/
+    cd /var/Phraseanet/
+    export HOME=/var/Phraseanet/
+    make
+fi
+
+if [ ! -f "/var/Phraseanet/config/configuration.yml" ]
+then
+	cd /var/Phraseanet/
+	mkdir Phrasea_datas
+   
+
+    #### Phraseanet install 
+    bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/Phraseanet/Phrasea_datas -y
     
+
+
+
 fi	
+
 
 
 # first arg is `-f` or `--some-option`
