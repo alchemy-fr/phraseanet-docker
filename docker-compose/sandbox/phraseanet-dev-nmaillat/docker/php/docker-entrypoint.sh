@@ -3,7 +3,7 @@
 set -e
 
 
-if [ ! -e "/var/Phraseanet/Phraseanet/vendor" ]
+if [ ! -e "/var/Phraseanet/Phraseanet/vendor/" ]
 then
     chown www-data: -R /var/www
     
@@ -25,6 +25,12 @@ cd /var/Phraseanet/Phraseanet/
     #### Phraseanet install 
     bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/Phraseanet/Phrasea_datas -y
     
+    ## change elasticsearch server host and create index
+    sed -i 's/host: localhost/host: elasticsearch/g' /var/Phraseanet/Phraseanet/config/configuration.yml 
+
+    bin/console comp:conf
+    bin/console searchengine:index -c
+
 
     #### download and install package version
     
