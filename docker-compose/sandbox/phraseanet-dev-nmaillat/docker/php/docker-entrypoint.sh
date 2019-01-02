@@ -3,7 +3,7 @@
 set -e
 
 
-if [ ! -e "/var/Phraseanet/Phraseanet/vendor/" ]
+if [ ! -d "/var/Phraseanet/Phraseanet/vendor" ]
 then
     chown www-data: -R /var/www
     
@@ -26,10 +26,34 @@ cd /var/Phraseanet/Phraseanet/
     bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/Phraseanet/Phrasea_datas -y
     
     ## change elasticsearch server host and create index
-    sed -i 's/host: localhost/host: elasticsearch/g' /var/Phraseanet/Phraseanet/config/configuration.yml 
-
-    bin/console comp:conf
+    #sed -i 's/host: localhost/host: elasticsearch/g' /var/Phraseanet/Phraseanet/config/configuration.yml 
+   
+    bin/setup system:config set main.search-engine.options.host elasticsearch
+    bin/console compile:configuration
     bin/console searchengine:index -c
+
+    ## disable ssl on api 
+    bin/setup system:config set main.api_require_ssl false
+    bin/console comp:conf
+    
+    ## set debug allowed Ip
+
+    bin/setup system:config set debugger.allowed-ips 192.168.128.1
+
+    ## create supervisord job
+
+    # to do 
+
+    ## edit subdef task setting
+
+    # to do 
+
+    ## set max_input_vars  max_execution_time in php.ini
+
+    # to do 
+    
+
+
 
 
     #### download and install package version

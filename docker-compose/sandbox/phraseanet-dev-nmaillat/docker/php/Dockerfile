@@ -69,9 +69,9 @@ COPY php-fpm.conf usr/local/etc/php-fpm.d/zz-docker.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
         
         
-COPY configuration-compiled.php /var/configuration-compiled.php
-COPY configuration.yml /var/configuration.yml
-COPY proxies /var/proxies
+# COPY configuration-compiled.php /var/configuration-compiled.php
+# COPY configuration.yml /var/configuration.yml
+# COPY proxies /var/proxies
 
 RUN apt-get install nano
 RUN apt-get install git
