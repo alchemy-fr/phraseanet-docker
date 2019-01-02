@@ -29,6 +29,10 @@ cd /var/Phraseanet/Phraseanet/
     #sed -i 's/host: localhost/host: elasticsearch/g' /var/Phraseanet/Phraseanet/config/configuration.yml 
    
     bin/setup system:config set main.search-engine.options.host elasticsearch
+    bin/setup system:config set main.search-engine.options.minScore 2
+    bin/setup system:config set main.search-engine.options.base_aggregate_limit 10
+    bin/setup system:config set main.search-engine.options.collection_aggregate_limit 10
+    bin/setup system:config set main.search-engine.options.doctype_aggregate_limit 10
     bin/console compile:configuration
     bin/console searchengine:index -c
 
@@ -36,9 +40,6 @@ cd /var/Phraseanet/Phraseanet/
     bin/setup system:config set main.api_require_ssl false
     bin/console comp:conf
     
-    ## set debug allowed Ip
-
-    bin/setup system:config set debugger.allowed-ips 192.168.128.1
 
     ## create supervisord job
 
@@ -72,6 +73,11 @@ cd /var/Phraseanet/Phraseanet/
 
 fi	
 
+## set debuger allowed Ip.
+
+cd /var/Phraseanet/Phraseanet/
+bin/setup system:config set debugger.allowed-ips 0.0.0.0
+bin/console comp:conf
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
