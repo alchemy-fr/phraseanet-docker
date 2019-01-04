@@ -25,6 +25,8 @@ cd /var/Phraseanet/Phraseanet/
     #### Phraseanet install 
     bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/Phraseanet/Phrasea_datas -y
     
+    bin/setup system:config set registry.general.title "docker-dev sandbox maillat"
+   
     ## change elasticsearch server host and create index
     #sed -i 's/host: localhost/host: elasticsearch/g' /var/Phraseanet/Phraseanet/config/configuration.yml 
    
@@ -36,7 +38,8 @@ cd /var/Phraseanet/Phraseanet/
     bin/console compile:configuration
     bin/console searchengine:index -c
 
-    ## disable ssl on api 
+    ## enable API and disable ssl on it
+    bin/setup system:config set registry.api-clients.api-enabled true
     bin/setup system:config set main.api_require_ssl false
     bin/console comp:conf
     
@@ -49,13 +52,7 @@ cd /var/Phraseanet/Phraseanet/
 
     # to do 
 
-    ## set max_input_vars  max_execution_time in php.ini
-
-    # to do 
-    
-
-
-
+  
 
     #### download and install package version
     
