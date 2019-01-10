@@ -24,26 +24,30 @@ IN /docker-compose.yml
 edit file path of container FS 
 set path for container FS to your Phraseanet cloned repo (absolute path is recomanded)
 
-docker-compose build
-docker-compose up
+ - docker-compose build
+ - docker-compose up
 
-for front dev worflow referer to confluence, but it's same of vagrant referer
+For front dev worflow referer to confluence, but it's same of vagrant referer
 
 
 ### Credential 
 
-Phraseanet user:
-password:
+Phraseanet credential is define in docker-entrypoint.sh of PHP 
 
-mariadb:
-root/root
+#### Phraseanet user: 
+- admin@phrdocker.dev / admin
 
-elasticsearch securytie
-not set
+#### mariadb:
+- root/root
 
-Url availlable 
+#### elasticsearch securitie.
+- not set
+
+#### Url availlable 
 127.0.0.1
 
-## To do
-define user name based on argument 
-documentation of host setting for debug url 
+### To do
+
+- Define Phraseanet user based on argument. 
+
+- Documentation of host setting for debug url. 
