@@ -50,7 +50,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 
 # pecl
-RUN pecl install redis amqp zmq-beta imagick-beta xdebug \
+RUN pecl install redis amqp-1.9.3 zmq-beta imagick-beta xdebug \
 && docker-php-ext-enable redis amqp zmq imagick \
 && pecl clear-cache \
 && docker-php-source delete \
