@@ -38,7 +38,9 @@ RUN apt-get update \
     libicu-dev \
     git \	
     nodejs \
-    yarn
+    yarn \
+    nano \
+    supervisor
 
 RUN update-locale "LANG=fr_FR.UTF-8 UTF-8" \
 && dpkg-reconfigure --frontend noninteractive locales
