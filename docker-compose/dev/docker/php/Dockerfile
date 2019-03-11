@@ -69,7 +69,7 @@ php -- --install-dir=/usr/bin/ --filename=composer
 
 COPY php-fpm.conf usr/local/etc/php-fpm.d/zz-docker.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
-        
+COPY supervisor-phraseanet-scheduler.conf /etc/supervisor/conf.d/scheduler-phraseanet.conf
         
 COPY configuration-compiled.php /var/configuration-compiled.php
 COPY configuration.yml /var/configuration.yml
@@ -90,6 +90,7 @@ ADD docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["php-fpm"]
+RUN supervisorctl update        
 
 
 
