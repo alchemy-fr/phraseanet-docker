@@ -24,7 +24,7 @@ IN /docker-compose.yml
 edit file path of container FS 
 set path for container FS to your Phraseanet cloned repo (absolute path is recomanded)
 
-docker-compose build
+docker-compose build or docker-compose build --build-arg VERSION=7.1 (where 7.1 is the version of PHP to install)
 docker-compose up
 
 for front dev worflow referer to confluence, but it's same of vagrant referer
