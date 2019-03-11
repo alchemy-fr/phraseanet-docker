@@ -7,7 +7,7 @@ MAINTAINER Ideepix <contact@ideepix.fr>
 COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
-&& apt-get install apt-transport-https ca-certificates
+&& apt-get install -y apt-transport-https ca-certificates
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
@@ -90,9 +90,6 @@ ADD docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["php-fpm"]
-RUN supervisorctl update        
-
-
 
 
 
