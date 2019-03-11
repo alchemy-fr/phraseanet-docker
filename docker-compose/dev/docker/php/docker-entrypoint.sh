@@ -20,7 +20,7 @@ fi
 if [ ! -f "/var/Phraseanet/config/configuration.yml" ]
 then
 	cd /var/Phraseanet/
-	mkdir Phrasea_datas
+	mkdir -p Phrasea_datas
    
 
     #### Phraseanet install 
@@ -37,6 +37,7 @@ fi
 if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
 fi
+service supervisor start
 
 exec "$@"
 
