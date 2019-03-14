@@ -1,0 +1,57 @@
+version: "3.4"
+services:
+
+  nginx:
+    build:
+      context: nginx/.
+    restart: always      
+    volumes:
+        - fs:/var/Phraseanet
+    links:
+      - phraseanet
+    ports:
+      - "80:80"
+
+  phraseanet:
+    build:
+      context: php/.
+      args:
+        VERSION: 7.0-fpm-jessie
+    environment:
+      XDEBUG_CONFIG: remote_host=10.181.138.170
+    links:
+      - db
+      #- elasticsearch
+    volumes:
+      - fs:/var/Phraseanet
+
+        
+  db:
+    image: mariadb
+    command: mysqld --sql_mode=""    
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+     - ${fs_mysql_init}:/docker-entrypoint-initdb.d
+     - ${fs_mysql}:/var/lib/mysql
+     
+  elasticsearch:
+    build: elasticsearch/.
+    restart: always
+    ports:
+      - 9200:9200
+    volumes:
+      - ${fs_elasticsearch}:/usr/share/elasticsearch/data
+
+
+
+volumes:
+  fs:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${fs_phraseanet}
+      o: bind
