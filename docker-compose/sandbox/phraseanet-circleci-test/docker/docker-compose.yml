@@ -1,9 +1,0 @@
-version: "3.4"
-services:
-
-  PhraseanetCIrcleci:
-    image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-    restart: always
-    command: /sbin/init
-    ports:
-      - "80:80"
