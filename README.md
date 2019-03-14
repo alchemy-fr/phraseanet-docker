@@ -1,22 +1,9 @@
-# docker-private
+# phraseanet-stack-docker
 
 ## Orgnisation WIP 
 
-- docker-compose/test.
-  - For testing Phraseanet in diferent archi/version 
-    ex : load balanced , elasticsearch cluster , but only working deployment.
-
-- docker-compose/sandbox 
-  - For Playing  and learn docker.
-
 - docker-compose/dev
   - For dev on Phraseanet.
-
-- docker-compose/demo 
-  - For customers testing a generate virtual machine for demo , need to be public.
-
-- docker-compose/prod
-  - For deploy somme client on other infra (later)
 
 
 All deployment use the futur "Phraseanet docker image", publish on docker hub.
@@ -29,20 +16,13 @@ https://phraseanet.atlassian.net/wiki/spaces/PHRAS/pages/573571073/Docker+notes+
 
 ## To do  
 
-For dev deployment
-
-Add to git ignore, all containers  generated files
- - mysql database
- - Phraseanet source
- - elasticindex
-
-Publish docker-compose/demo on public repo.
-
-
+- Add Redis container 
+- Split Phraseanet Container, one for fpm  one for worker
+- Add let's encrypt conf in vhost (optionnal)
 
 ## Complement
 
-You can find a standard dataset here
+You can find a dataset here
 
 
 - Base Parade.
