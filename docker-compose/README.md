@@ -6,16 +6,20 @@ Docker deployment for Phraseanet
 
 In .env set 
 
-The Phraseanet code repo 
+The Phraseanet code repo
+
 fs_phraseanet=/Users/HorseWithNoName/workspace/DevPhraseanet40/phraseanet/phraseanet
 
 The template database
+
 fs_mysql_init=/Users/HorseWithNoName/workspace/DevPhraseanet40/phraseanet/dump
 
 The database mount in mysql 
+
 fs_mysql=/Users/HorseWithNoName/workspace/DevPhraseanet40/phraseanet/mysql
 
 The elasticsearch index
+
 fs_elasticsearch=/Users/HorseWithNoName/workspace/DevPhraseanet40/phraseanet/elasticsearch
 
 
