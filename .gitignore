@@ -36,5 +36,4 @@ Thumbs.db
 
 # .env file #
 #############
-
 /docker-compose/docker/.env
