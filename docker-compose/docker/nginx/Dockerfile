@@ -1,6 +1,5 @@
 FROM nginx
 
-COPY nginx.conf /etc/nginx/nginx.conf
+RUN useradd -u 1000 app
 
-RUN usermod -u 33 www-data 
-RUN usermod -G staff www-data
+COPY nginx.conf /etc/nginx/nginx.conf
