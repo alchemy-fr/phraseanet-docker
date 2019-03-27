@@ -16,30 +16,7 @@ services:
     depends_on:
       - phraseanet
     ports:
-      - "80:80"
-
-  dev:
-    build:
-      context: dev
-    networks:
-      - internal
-    volumes:
-      - app_vol:/var/Phraseanet
-      - data_vol:/var/data
-      - dev_vol:/home/app
-    stdin_open: true
-    tty: true
-    hostname: local
-    environment:
-      - SYMFONY_ENV
-      - SSH_AUTH_SOCK=/ssh-auth-sock
-    depends_on:
-      - db
-      - redis
-      - rabbitmq
-      - elasticsearch
-      - phraseanet
-    working_dir: /var/Phraseanet/
+      - ${PHRASEANET_APP_PORT}:80
 
   phraseanet:
     build:
@@ -47,14 +24,11 @@ services:
     image: phraseanet
     networks:
       - internal
-    environment:
-      XDEBUG_CONFIG: remote_host=10.181.138.170
     depends_on:
       - db
       - redis
       - rabbitmq
       - elasticsearch
-    working_dir: /var/Phraseanet/
     volumes:
       - app_vol:/var/Phraseanet
       - data_vol:/var/data
@@ -103,8 +77,6 @@ services:
     networks:
       - internal
     restart: always
-    ports:
-      - 9200:9200
     volumes:
       - elasticsearch_vol:/usr/share/elasticsearch/data
 

@@ -28,6 +28,7 @@ RUN apt-get update \
         libav-tools \
         locales \
         libicu-dev \
+        unzip \
     && update-locale "LANG=fr_FR.UTF-8 UTF-8" \
     && dpkg-reconfigure --frontend noninteractive locales \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -44,10 +45,18 @@ RUN apt-get update \
 RUN mkdir /entrypoint \
     && useradd -u 1000 app \
     && mkdir -p /home/app/.composer \
-    && mkdir -p /var/Phraseanet \
+    && mkdir -p /tmp/phraseanet \
+    && cd /tmp/phraseanet \
+    && curl -sL https://www.phraseanet.com/builds/alchemy-fr-Phraseanet-v4.0.7.zip > phrasea.zip \
+    && unzip -q phrasea.zip \
+    && rm phrasea.zip \
+    && mv Phraseanet /var/Phraseanet \
     && chown -R app: /home/app /var/Phraseanet
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
 
+WORKDIR /var/Phraseanet/
+
 CMD ["php-fpm"]
+

@@ -6,5 +6,27 @@ services:
       - internal
     ports:
       - 8080:80
-    links:
+    depends_on:
       - db
+
+  dev:
+    build:
+      context: dev
+    networks:
+      - internal
+    stdin_open: true
+    tty: true
+    hostname: local
+    environment:
+      - SYMFONY_ENV
+      - SSH_AUTH_SOCK=/ssh-auth-sock
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+      - elasticsearch
+      - phraseanet
+    volumes:
+      - app_vol:/var/Phraseanet
+      - data_vol:/var/data
+      - dev_vol:/home/app
