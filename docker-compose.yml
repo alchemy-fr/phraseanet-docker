@@ -34,6 +34,10 @@ services:
       - SYMFONY_ENV
       - SSH_AUTH_SOCK=/ssh-auth-sock
     depends_on:
+      - db
+      - redis
+      - rabbitmq
+      - elasticsearch
       - phraseanet
     working_dir: /var/Phraseanet/
 
@@ -48,7 +52,8 @@ services:
     depends_on:
       - db
       - redis
-      #- elasticsearch
+      - rabbitmq
+      - elasticsearch
     working_dir: /var/Phraseanet/
     volumes:
       - app_vol:/var/Phraseanet
@@ -61,7 +66,9 @@ services:
       - internal
     depends_on:
       - db
-      #- elasticsearch
+      - redis
+      - rabbitmq
+      - elasticsearch
     volumes:
       - app_vol:/var/Phraseanet
       - data_vol:/var/data
@@ -72,8 +79,6 @@ services:
       - internal
     command: mysqld --sql_mode=""
     restart: always
-    ports:
-      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
