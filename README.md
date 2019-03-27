@@ -9,6 +9,11 @@ export PHRASEANET_APP_DIR=/path/to/phraseanet-app
 ```
 > Make sure to set an absolute path.
 
+Don't forget to refresh your current shell:
+```bash
+source ~/.profile
+```
+
 Now, install the Phraseanet application and databases:
 
 ```bash
@@ -25,8 +30,8 @@ Start your browser at: `http://localhost/`
 
 ### Credential 
 
-user: `admin@phrdocker.dev`
-password: `admin`
+- user: `admin@phrdocker.dev`
+- password: `admin`
 
 ## Development
 

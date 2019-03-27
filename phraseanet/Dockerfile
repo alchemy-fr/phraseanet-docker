@@ -44,7 +44,8 @@ RUN apt-get update \
 RUN mkdir /entrypoint \
     && useradd -u 1000 app \
     && mkdir -p /home/app/.composer \
-    && chown -R app: /home/app
+    && mkdir -p /var/Phraseanet \
+    && chown -R app: /home/app /var/Phraseanet
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
