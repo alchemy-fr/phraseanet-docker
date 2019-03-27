@@ -1,0 +1,10 @@
+version: "3.4"
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    networks:
+      - internal
+    ports:
+      - 8080:80
+    links:
+      - db

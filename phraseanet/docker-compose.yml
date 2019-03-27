@@ -1,0 +1,120 @@
+version: "3.4"
+
+networks:
+  internal:
+
+services:
+  nginx:
+    build:
+      context: nginx
+    networks:
+      - internal
+    restart: always
+    volumes:
+        - app_vol:/var/Phraseanet
+        - data_vol:/var/data
+    depends_on:
+      - phraseanet
+    ports:
+      - "80:80"
+
+  dev:
+    build:
+      context: dev
+    networks:
+      - internal
+    volumes:
+      - app_vol:/var/Phraseanet
+      - data_vol:/var/data
+      - dev_vol:/home/app
+    stdin_open: true
+    tty: true
+    hostname: local
+    environment:
+      - SYMFONY_ENV
+      - SSH_AUTH_SOCK=/ssh-auth-sock
+    depends_on:
+      - phraseanet
+    working_dir: /var/Phraseanet/
+
+  phraseanet:
+    build:
+      context: phraseanet
+    image: phraseanet
+    networks:
+      - internal
+    environment:
+      XDEBUG_CONFIG: remote_host=10.181.138.170
+    depends_on:
+      - db
+      - redis
+      #- elasticsearch
+    working_dir: /var/Phraseanet/
+    volumes:
+      - app_vol:/var/Phraseanet
+      - data_vol:/var/data
+
+  worker:
+    build:
+      context: worker
+    networks:
+      - internal
+    depends_on:
+      - db
+      #- elasticsearch
+    volumes:
+      - app_vol:/var/Phraseanet
+      - data_vol:/var/data
+
+  db:
+    image: mariadb
+    networks:
+      - internal
+    command: mysqld --sql_mode=""
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+     - ./db:/docker-entrypoint-initdb.d
+     - db_vol:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    networks:
+      - internal
+    environment:
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS
+
+  redis:
+    image: redis
+    networks:
+      - internal
+
+  elasticsearch:
+    build: elasticsearch
+    networks:
+      - internal
+    restart: always
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch_vol:/usr/share/elasticsearch/data
+
+volumes:
+  app_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PHRASEANET_APP_DIR}
+      o: bind
+  data_vol:
+    driver: local
+  db_vol:
+    driver: local
+  elasticsearch_vol:
+    driver: local
+  dev_vol:
+    driver: local
