@@ -79,7 +79,7 @@ Then run:
 docker-compose up -d
 ````
 
-If `docker-compose.yaml` and a `docker-compose.override.yaml` are present on the same directory level, Docker Compose combines the two files into a single configuration, applying the configuration in the `docker-compose.override.yaml` file over and in addition to the values in the `docker-compose.yaml` file.
+If `docker-compose.yml` and a `docker-compose.override.yml` are present on the same directory level, Docker Compose combines the two files into a single configuration, applying the configuration in the `docker-compose.override.yml` file over and in addition to the values in the `docker-compose.yml` file.
 
 ### Changing port
 

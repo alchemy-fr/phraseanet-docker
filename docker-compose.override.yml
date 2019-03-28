@@ -30,3 +30,4 @@ services:
       - app_vol:/var/Phraseanet
       - data_vol:/var/data
       - dev_vol:/home/app
+      - ~/.ssh:/home/app/.ssh
