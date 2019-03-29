@@ -94,12 +94,6 @@ export PHRASEANET_APP_PORT=8099
 
 ### More
 
-
-for front dev worflow referer to confluence, but it's same of vagrant referer
-
-See also doc in [confluence](https://phraseanet.atlassian.net/wiki/spaces/PHRAS/pages/573571073/Docker+notes+de+formations+du+10+d+cembre+2018)
-
-
 You can find a dataset here:
 
  TODO
