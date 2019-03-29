@@ -1,4 +1,4 @@
-FROM php:7.0-fpm-stretch
+FROM php:7.3-fpm-stretch
 
 COPY php.ini /usr/local/etc/php/
 
@@ -7,19 +7,20 @@ RUN apt-get update \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends zlib1g-dev \
+    && apt-get update
+
+# TODO merge
+
+RUN apt-get install -y --no-install-recommends zlib1g-dev \
         libssl-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
-        libmcrypt-dev \
         libpng-dev \
         libxslt-dev	\
         librabbitmq-dev \
         libzmq3-dev \
         imagemagick \
         libmagickwand-dev \
-        mcrypt \
         swftools \
         xpdf \
         unoconv \
@@ -29,11 +30,13 @@ RUN apt-get update \
         locales \
         libicu-dev \
         unzip \
-    && update-locale "LANG=fr_FR.UTF-8 UTF-8" \
+        libzip-dev
+
+RUN update-locale "LANG=fr_FR.UTF-8 UTF-8" \
     && dpkg-reconfigure --frontend noninteractive locales \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install zip exif iconv mbstring pcntl sockets xsl intl pdo_mysql gettext bcmath mcrypt \
+    && docker-php-ext-install zip exif iconv mbstring pcntl sockets xsl intl pdo_mysql gettext bcmath \
     && pecl install redis amqp-1.9.3 zmq-beta imagick-beta xdebug \
     && docker-php-ext-enable redis amqp zmq imagick \
     && pecl clear-cache \
