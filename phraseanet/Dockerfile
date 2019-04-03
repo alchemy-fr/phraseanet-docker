@@ -26,7 +26,6 @@ RUN apt-get update \
         unzip \
         git \
         libzip-dev \
-        nodejs \
         yarn \
         libpng-dev \
         build-essential \
