@@ -28,10 +28,6 @@ RUN apt-get update && apt-get install -y \
         yarn \
         libpng-dev \
         build-essential \
-    && npm install -g \
-        webpack \
-        webpack-cli \
-        newman \
     && mkdir -p /bootstrap/entrypoint.d \
     && composer global require \
         friendsofphp/php-cs-fixer \
