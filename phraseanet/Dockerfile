@@ -24,9 +24,7 @@ RUN apt-get update \
         locales \
         libicu-dev \
         unzip \
-        git \
         libzip-dev \
-        yarn \
         libpng-dev \
         build-essential \
         libsodium-dev \

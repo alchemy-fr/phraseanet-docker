@@ -4,7 +4,7 @@ set -e
 
 if [ ! -d "/var/Phraseanet/www" ]
 then
-    git clone https://github.com/alchemy-fr/Phraseanet.git /var/Phraseanet/
+    git clone https://github.com/alchemy-fr/Phraseanet.git /tmp/Phraseanet/
     mv /tmp/Phraseanet/{.,}* /var/Phraseanet/
 fi
 
