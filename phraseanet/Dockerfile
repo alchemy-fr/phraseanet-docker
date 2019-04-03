@@ -4,9 +4,6 @@ COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
     && apt-get install -y apt-transport-https ca-certificates gnupg2 \
-    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends zlib1g-dev \
         libssl-dev \
@@ -45,13 +42,7 @@ RUN apt-get update \
 RUN mkdir /entrypoint \
     && useradd -u 1000 app \
     && mkdir -p /home/app/.composer \
-    && mkdir -p /tmp/phraseanet \
-    && cd /tmp/phraseanet \
-    && curl -sL https://www.phraseanet.com/builds/alchemy-fr-Phraseanet-v4.0.7.zip > phrasea.zip \
-    && unzip -q phrasea.zip \
-    && rm phrasea.zip \
-    && mv Phraseanet /var/Phraseanet \
-    && chown -R app: /home/app /var/Phraseanet
+    && chown -R app: /home/app
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
@@ -59,4 +50,3 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
 WORKDIR /var/Phraseanet/
 
 CMD ["php-fpm"]
-
