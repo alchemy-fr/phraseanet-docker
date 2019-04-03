@@ -7,11 +7,8 @@ RUN apt-get update \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update
-
-# TODO merge
-
-RUN apt-get install -y --no-install-recommends zlib1g-dev \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends zlib1g-dev \
         libssl-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -36,9 +33,8 @@ RUN apt-get install -y --no-install-recommends zlib1g-dev \
         yarn \
         libpng-dev \
         build-essential \
-        libsodium-dev
-
-RUN update-locale "LANG=fr_FR.UTF-8 UTF-8" \
+        libsodium-dev \
+    && update-locale "LANG=fr_FR.UTF-8 UTF-8" \
     && dpkg-reconfigure --frontend noninteractive locales \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
@@ -49,9 +45,11 @@ RUN update-locale "LANG=fr_FR.UTF-8 UTF-8" \
     && docker-php-source delete \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini \
+	&& rm -rf /var/lib/apt/lists/*
 
 ENV ZEROMQ_VERSION=4.1.4
+ENV ZEROMQ_PHP_VERSION=1.1.2
 
 RUN cd /tmp \
     && curl -fsSL https://archive.org/download/zeromq_${ZEROMQ_VERSION}/zeromq-${ZEROMQ_VERSION}.tar.gz -o zeromq.tar.gz \
@@ -61,19 +59,16 @@ RUN cd /tmp \
     && cd /tmp/zeromq \
     && ./configure \
     && make \
-    && make install
-
-ENV ZEROMQ_PHP_VERSION=1.1.2
-
-RUN curl -fsSL https://github.com/mkoppanen/php-zmq/archive/master.tar.gz -o php-zmq.tar.gz \
+    && make install \
+    && curl -fsSL https://github.com/mkoppanen/php-zmq/archive/master.tar.gz -o php-zmq.tar.gz \
     && mkdir -p /tmp/php-zmq \
     && tar -xf php-zmq.tar.gz -C /tmp/php-zmq --strip-components=1 \
     && cd /tmp/php-zmq \
     && docker-php-ext-configure /tmp/php-zmq \
     && docker-php-ext-install /tmp/php-zmq \
-    && rm -rf /tmp/php-zmq
-
-RUN useradd -u 1000 app \
+    && rm -rf /tmp/php-zmq \
+    && useradd -u 1000 app \
+    && cd /root \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && mkdir -p /home/app/.composer \
