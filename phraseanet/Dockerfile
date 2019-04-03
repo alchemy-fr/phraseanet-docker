@@ -4,9 +4,6 @@ COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
     && apt-get install -y apt-transport-https ca-certificates gnupg2 \
-    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends zlib1g-dev \
         libssl-dev \
