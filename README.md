@@ -6,6 +6,7 @@ Define the local path where you want to store the phraseanet source code:
 # ~/.profile
 
 export PHRASEANET_APP_DIR=/path/to/phraseanet-app
+#export PHRASEANET_APP_PORT=80
 ```
 > Make sure to set an absolute path.
 

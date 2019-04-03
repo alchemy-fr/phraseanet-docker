@@ -30,31 +30,54 @@ RUN apt-get install -y --no-install-recommends zlib1g-dev \
         locales \
         libicu-dev \
         unzip \
-        libzip-dev
+        git \
+        libzip-dev \
+        nodejs \
+        yarn \
+        libpng-dev \
+        build-essential \
+        libsodium-dev
 
 RUN update-locale "LANG=fr_FR.UTF-8 UTF-8" \
     && dpkg-reconfigure --frontend noninteractive locales \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install zip exif iconv mbstring pcntl sockets xsl intl pdo_mysql gettext bcmath \
-    && pecl install redis amqp-1.9.3 zmq-beta imagick-beta xdebug \
-    && docker-php-ext-enable redis amqp zmq imagick \
+    && pecl install redis amqp imagick-beta xdebug \
+    && docker-php-ext-enable redis amqp imagick \
     && pecl clear-cache \
     && docker-php-source delete \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN mkdir /entrypoint \
-    && useradd -u 1000 app \
+ENV ZEROMQ_VERSION=4.1.4
+
+RUN cd /tmp \
+    && curl -fsSL https://archive.org/download/zeromq_${ZEROMQ_VERSION}/zeromq-${ZEROMQ_VERSION}.tar.gz -o zeromq.tar.gz \
+    && mkdir -p /tmp/zeromq \
+    && tar -xf zeromq.tar.gz -C /tmp/zeromq --strip-components=1 \
+    && rm zeromq.tar.gz \
+    && cd /tmp/zeromq \
+    && ./configure \
+    && make \
+    && make install
+
+ENV ZEROMQ_PHP_VERSION=1.1.2
+
+RUN curl -fsSL https://github.com/mkoppanen/php-zmq/archive/master.tar.gz -o php-zmq.tar.gz \
+    && mkdir -p /tmp/php-zmq \
+    && tar -xf php-zmq.tar.gz -C /tmp/php-zmq --strip-components=1 \
+    && cd /tmp/php-zmq \
+    && docker-php-ext-configure /tmp/php-zmq \
+    && docker-php-ext-install /tmp/php-zmq \
+    && rm -rf /tmp/php-zmq
+
+RUN useradd -u 1000 app \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
     && mkdir -p /home/app/.composer \
-    && mkdir -p /tmp/phraseanet \
-    && cd /tmp/phraseanet \
-    && curl -sL https://www.phraseanet.com/builds/alchemy-fr-Phraseanet-v4.0.7.zip > phrasea.zip \
-    && unzip -q phrasea.zip \
-    && rm phrasea.zip \
-    && mv Phraseanet /var/Phraseanet \
-    && chown -R app: /home/app /var/Phraseanet
+    && chown -R app: /home/app
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
@@ -62,4 +85,3 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
 WORKDIR /var/Phraseanet/
 
 CMD ["php-fpm"]
-

@@ -14,24 +14,12 @@ RUN apt-get update && apt-get install -y \
         libtool \
         pkg-config \
         nasm \
-	&& curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer \
     && curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony \
     && chmod a+x /usr/local/bin/symfony \
     && echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> /etc/zsh/zshrc \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y \
-        nodejs \
-        yarn \
-        libpng-dev \
-        build-essential \
-    && npm install -g \
-        webpack \
-        webpack-cli \
-        newman \
     && mkdir -p /bootstrap/entrypoint.d \
     && composer global require \
         friendsofphp/php-cs-fixer \
