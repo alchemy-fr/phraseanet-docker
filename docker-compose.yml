@@ -11,7 +11,7 @@ services:
       - internal
     restart: always
     volumes:
-        - app_vol:/var/Phraseanet
+        - alchemy_vol:/var/alchemy/Phraseanet
         - data_vol:/var/data
     depends_on:
       - phraseanet
@@ -30,7 +30,7 @@ services:
       - rabbitmq
       - elasticsearch
     volumes:
-      - app_vol:/var/Phraseanet
+      - alchemy_vol:/var/alchemy/Phraseanet
       - data_vol:/var/data
 
   worker:
@@ -44,7 +44,7 @@ services:
       - rabbitmq
       - elasticsearch
     volumes:
-      - app_vol:/var/Phraseanet
+      - alchemy_vol:/var/alchemy/Phraseanet
       - data_vol:/var/data
 
   db:
@@ -81,11 +81,11 @@ services:
       - elasticsearch_vol:/usr/share/elasticsearch/data
 
 volumes:
-  app_vol:
+  alchemy_vol:
     driver: local
     driver_opts:
       type: none
-      device: ${PHRASEANET_APP_DIR}
+      device: ${ALCHEMY_WORKSPACE_DIR}
       o: bind
   data_vol:
     driver: local

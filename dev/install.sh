@@ -2,20 +2,21 @@
 
 set -e
 
-if [ ! -d "/var/Phraseanet/www" ]
+if [ ! -d "/var/alchemy/Phraseanet/www" ]
 then
-    git clone https://github.com/alchemy-fr/Phraseanet.git /tmp/Phraseanet
-    mv /tmp/Phraseanet/* /var/Phraseanet/
+    git clone https://github.com/alchemy-fr/Phraseanet.git /var/alchemy/
+    (cd /var/alchemy \
+        && git remote rename origin alchemy)
 fi
 
-make
+(cd /var/alchemy/Phraseanet && make)
 
-if [ ! -f "/var/Phraseanet/config/configuration.yml" ]
+if [ ! -f "/var/alchemy/Phraseanet/config/configuration.yml" ]
 then
     mkdir -p Phrasea_datas
 
     #### Phraseanet install
-    bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/Phraseanet/Phrasea_datas -y
+    bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/alchemy/Phraseanet/Phrasea_datas -y
 
     ## change elasticsearch server host and create index
     bin/setup system:config set main.search-engine.options.host elasticsearch

@@ -1,13 +1,15 @@
 ## Installation
 
-Define the local path where you want to store the phraseanet source code:
+Define the local path where you want to store the Alchemy source code on your host:
 
 ```bash
 # ~/.profile
 
-export PHRASEANET_APP_DIR=/path/to/phraseanet-app
+export ALCHEMY_WORKSPACE_DIR=/path/to/my/workspace
 ```
 > Make sure to set an absolute path.
+
+Every project or application will sit in this folder.
 
 Don't forget to refresh your current shell:
 ```bash
@@ -36,8 +38,14 @@ Start your browser at: `http://localhost/`
 ## Development
 
 ```bash
-docker-compose run dev
+bin/shell.sh
 ```
+
+If you need root access, you can run:
+```bash
+bin/shell.sh root
+```
+> Please consider updating the Dockerfile when you deal with system or programs
 
 ## Debug
 
@@ -91,6 +99,14 @@ You can change it by overriding `PHRASEANET_APP_PORT` env var.
 
 export PHRASEANET_APP_PORT=8099
 ```
+
+## Troubleshooting
+
+Help! I get the following error:
+
+- `Error response from daemon: error while mounting volume '/var/lib/docker/volumes/phraseanet_alchemy_vol/_data': error while mounting volume with options: type='none' device='/var/alchemy' o='bind': no such file or directory`
+ You may have forgotten to define your `ALCHEMY_WORKSPACE_DIR` environment variable.
+
 
 ### More
 
