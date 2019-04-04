@@ -27,7 +27,7 @@ services:
       - elasticsearch
       - phraseanet
     volumes:
-      - app_vol:/var/Phraseanet
+      - alchemy_vol:/var/alchemy/Phraseanet
       - data_vol:/var/data
       - dev_vol:/home/app
       - ~/.ssh:/home/app/.ssh

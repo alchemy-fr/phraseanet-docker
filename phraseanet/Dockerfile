@@ -1,4 +1,4 @@
-FROM php:7.0-fpm-stretch
+FROM php:7.1-fpm-stretch
 
 COPY php.ini /usr/local/etc/php/
 
@@ -39,14 +39,14 @@ RUN apt-get update \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN mkdir /entrypoint \
+RUN mkdir /entrypoint /var/alchemy \
     && useradd -u 1000 app \
     && mkdir -p /home/app/.composer \
-    && chown -R app: /home/app
+    && chown -R app: /home/app /var/alchemy
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf.default
 
-WORKDIR /var/Phraseanet/
+WORKDIR /var/alchemy/
 
 CMD ["php-fpm"]

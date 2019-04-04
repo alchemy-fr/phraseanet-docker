@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -y \
     && composer global require \
         friendsofphp/php-cs-fixer \
     && git clone https://github.com/robbyrussell/oh-my-zsh.git /bootstrap/.oh-my-zsh \
+    && npm install -g \
+        bower \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY oh-my-zsh/.zshrc /bootstrap/.zshrc
