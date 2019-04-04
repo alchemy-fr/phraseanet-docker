@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
         unzip \
         libtool \
         pkg-config \
+        iputils-ping \
         nasm \
 	&& curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
@@ -40,7 +41,8 @@ COPY oh-my-zsh/.zshrc /bootstrap/.zshrc
 COPY entrypoint.sh /bootstrap/entrypoint.sh
 COPY entrypoint.d/* /bootstrap/entrypoint.d/
 COPY install.sh /install.sh
-COPY oh-my-zsh/themes/alchemy.zsh-theme /bootstrap/.oh-my-zsh/themes/alchemy.zsh-theme
+COPY oh-my-zsh/plugins /bootstrap/.oh-my-zsh/plugins
+COPY oh-my-zsh/themes /bootstrap/.oh-my-zsh/themes
 
 RUN chmod -R +x \
         /bootstrap/entrypoint.sh \
