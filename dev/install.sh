@@ -17,7 +17,7 @@ then
     mkdir -p /var/alchemy/Phrasea_datas
 
     #### Phraseanet install
-    bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/alchemy/Phraseanet/Phrasea_datas -y
+    bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/alchemy/Phrasea_datas -y
 
     ## change elasticsearch server host and create index
     bin/setup system:config set main.search-engine.options.host elasticsearch
