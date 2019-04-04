@@ -47,6 +47,31 @@ bin/shell.sh root
 ```
 > Please consider updating the Dockerfile when you deal with system or programs
 
+## Changing web server port
+
+By default phraseanet application binds port 80.
+You can change it by overriding `PHRASEANET_APP_PORT` env var.
+
+```bash
+# ~/.profile
+
+export PHRASEANET_APP_PORT=8099
+```
+
+## Services
+
+### PhpMyAdmin
+
+Go to `http://localhost:8080/`
+
+You can also change the port by setting `PHPMYADMIN_PORT` env var.
+
+### RabbitMQ Management
+
+Go to `http://localhost:8081/`
+
+You can also change the port by setting `RABBITMQ_MANAGEMENT_PORT` env var.
+
 ## Debug
 
 To see what's happening in application you can watch the `phraseanet` container's logs:
@@ -88,17 +113,6 @@ docker-compose up -d
 ````
 
 If `docker-compose.yml` and a `docker-compose.override.yml` are present on the same directory level, Docker Compose combines the two files into a single configuration, applying the configuration in the `docker-compose.override.yml` file over and in addition to the values in the `docker-compose.yml` file.
-
-### Changing port
-
-By default application binds port 80.
-You can change it by overriding `PHRASEANET_APP_PORT` env var.
-
-```bash
-# ~/.profile
-
-export PHRASEANET_APP_PORT=8099
-```
 
 ## Troubleshooting
 
