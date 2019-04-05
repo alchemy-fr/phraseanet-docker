@@ -5,7 +5,7 @@ services:
     networks:
       - internal
     ports:
-      - 8080:80
+      - ${PHPMYADMIN_PORT}:80
     depends_on:
       - db
 
@@ -27,7 +27,11 @@ services:
       - elasticsearch
       - phraseanet
     volumes:
-      - app_vol:/var/Phraseanet
+      - alchemy_vol:/var/alchemy
       - data_vol:/var/data
       - dev_vol:/home/app
       - ~/.ssh:/home/app/.ssh
+
+  rabbitmq:
+    ports:
+      - ${RABBITMQ_MANAGEMENT_PORT}:15672
