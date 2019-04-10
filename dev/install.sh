@@ -12,12 +12,14 @@ fi
 cd /var/alchemy/Phraseanet
 make
 
+DATA_PATH="/var/alchemy/data/phraseanet"
+
 if [ ! -f "/var/alchemy/Phraseanet/config/configuration.yml" ]
 then
-    mkdir -p /var/alchemy/Phrasea_datas
+    mkdir -p "${DATA_PATH}"
 
     #### Phraseanet install
-    bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path=/var/alchemy/Phrasea_datas -y
+    bin/setup system:install --email=admin@phrdocker.dev --password=admin --db-host=db --db-port=3306 --db-user=root --db-password=root --db-template=en-simple --appbox=ab_master --databox=db_databox1 --server-name=Alchemy-dockerdev.dck --data-path="${DATA_PATH}" -y
 
     ## change elasticsearch server host and create index
     bin/setup system:config set main.search-engine.options.host elasticsearch
@@ -31,12 +33,17 @@ then
     bin/setup system:config set workers.queue.main-queue.host rabbitmq
     bin/setup system:config set workers.queue.main-queue.user alchemy
     bin/setup system:config set workers.queue.main-queue.password vdh4dpe5Wy3R
-    bin/setup system:config set main.storage.subdefs /var/alchemy/Phrasea_datas
+    bin/setup system:config set main.storage.subdefs "${DATA_PATH}"
     bin/setup system:config set main.storage.cache /var/alchemy/Phraseanet/cache
     bin/setup system:config set main.storage.log /var/alchemy/Phraseanet/log
     bin/setup system:config set main.storage.download /var/alchemy/Phraseanet/tmp/download
     bin/setup system:config set main.storage.lazaret /var/alchemy/Phraseanet/tmp/lazaret
     bin/setup system:config set main.storage.caption /var/alchemy/Phraseanet/tmp/caption
+    bin/setup system:config set rabbitmq.server.host 95.131.138.19
+    bin/setup system:config set rabbitmq.server.port 5672
+    bin/setup system:config set rabbitmq.server.user elastic
+    bin/setup system:config set rabbitmq.server.password elastic
+    bin/setup system:config set rabbitmq.server.vhost /alpha-preprod-legacy
 
     HOST_IP=$(/sbin/ip route|awk '/default/ { print $3 }');
     bin/setup system:config add debugger.allowed-ips ${HOST_IP}
