@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - docker-compose
-- docker >=v18.01-ce
+- docker >= v18.01-ce
 
 ## Installation
 
