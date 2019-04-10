@@ -21,6 +21,7 @@ services:
   phraseanet:
     build:
       context: phraseanet
+      target: phraseanet_prod
     image: phraseanet
     networks:
       - internal

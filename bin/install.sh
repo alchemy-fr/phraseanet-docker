@@ -2,6 +2,6 @@
 
 set -e
 
-docker-compose build
+bin/build.sh
 
 docker-compose run --rm dev /install.sh

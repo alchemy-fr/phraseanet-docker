@@ -37,6 +37,11 @@ then
     bin/setup system:config set main.storage.download /var/alchemy/Phraseanet/tmp/download
     bin/setup system:config set main.storage.lazaret /var/alchemy/Phraseanet/tmp/lazaret
     bin/setup system:config set main.storage.caption /var/alchemy/Phraseanet/tmp/caption
+
+    HOST_IP=$(/sbin/ip route|awk '/default/ { print $3 }');
+    bin/setup system:config add debugger.allowed-ips ${HOST_IP}
+    bin/setup system:config add trusted-proxies ${HOST_IP}
+
     bin/console compile:configuration
     bin/console searchengine:index -c
 

@@ -9,6 +9,13 @@ services:
     depends_on:
       - db
 
+  phraseanet:
+    build:
+      target: phraseanet_debug
+    environment:
+      - DOCKER_XDEBUG_ENABLED
+      - PHP_IDE_CONFIG=serverName=${SERVER_NAME}
+
   dev:
     build:
       context: dev
@@ -20,6 +27,8 @@ services:
     environment:
       - SYMFONY_ENV
       - SSH_AUTH_SOCK=/ssh-auth-sock
+      - DOCKER_XDEBUG_ENABLED
+      - PHP_IDE_CONFIG=serverName=${SERVER_NAME}
     depends_on:
       - db
       - redis
