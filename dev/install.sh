@@ -39,11 +39,11 @@ then
     bin/setup system:config set main.storage.download /var/alchemy/Phraseanet/tmp/download
     bin/setup system:config set main.storage.lazaret /var/alchemy/Phraseanet/tmp/lazaret
     bin/setup system:config set main.storage.caption /var/alchemy/Phraseanet/tmp/caption
-    bin/setup system:config set rabbitmq.server.host 95.131.138.19
+    bin/setup system:config set rabbitmq.server.host rabbitmq
     bin/setup system:config set rabbitmq.server.port 5672
-    bin/setup system:config set rabbitmq.server.user elastic
-    bin/setup system:config set rabbitmq.server.password elastic
-    bin/setup system:config set rabbitmq.server.vhost /alpha-preprod-legacy
+    bin/setup system:config set rabbitmq.server.user guest
+    bin/setup system:config set rabbitmq.server.password guest
+    bin/setup system:config set rabbitmq.server.vhost /
 
     HOST_IP=$(/sbin/ip route|awk '/default/ { print $3 }');
     bin/setup system:config add debugger.allowed-ips ${HOST_IP}
