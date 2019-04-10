@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
         unzip \
         vim \
         zsh \
-	&& curl -sS https://getcomposer.org/installer | php \
+    && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony \
     && chmod a+x /usr/local/bin/symfony \
@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -y \
         yarn \
         libpng-dev \
         build-essential \
-	&& rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /bootstrap/entrypoint.d \
     && git clone https://github.com/robbyrussell/oh-my-zsh.git /bootstrap/.oh-my-zsh \
     && npm install -g \

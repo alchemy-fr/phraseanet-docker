@@ -19,7 +19,7 @@ RUN apt-get update \
         libpng-dev \
         librabbitmq-dev \
         libssl-dev \
-        libxslt-dev	\
+        libxslt-dev \
         libzmq3-dev \
         locales \
         mcrypt \
@@ -57,9 +57,9 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         iproute2 \
     && rm -rf /var/lib/apt/lists/* \
-	&& pecl install xdebug \
-	&& docker-php-ext-enable xdebug \
-	&& pecl clear-cache
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && pecl clear-cache
 
 COPY usr-bin/* /usr/local/bin/
 COPY entrypoint.sh /
