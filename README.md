@@ -1,3 +1,9 @@
+# Phraseanet Docker stack
+
+## Prerequisites
+
+- docker-compose 
+
 ## Installation
 
 Define the local path where you want to store the Alchemy source code on your host:
