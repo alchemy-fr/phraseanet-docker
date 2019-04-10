@@ -38,5 +38,4 @@ jobs:
           command: |-
             # Avoid volume creation with local binding (Docker is run on remote host on CircleCI):
             docker volume create --name "${COMPOSE_PROJECT_NAME}_alchemy_vol"
-            docker-compose up -d
             bin/install.sh
