@@ -1,3 +1,10 @@
+# Phraseanet Docker stack
+
+## Prerequisites
+
+- docker-compose
+- docker >=v18.01-ce
+
 ## Installation
 
 Define the local path where you want to store the Alchemy source code on your host:
@@ -82,37 +89,32 @@ docker-compose logs -f phraseanet
 
 ### Configure Xdebug with Docker Compose Override
 
-Using an [override](https://docs.docker.com/compose/reference/overview/#specifying-multiple-compose-files) file named `docker-compose.override.yaml` ensures that the production
-configuration remains untouched.
+Server name defaults to `phraseanet-docker`. You should use this value in your IDE.
+If you use PHPStorm, go to `Preferences | Languages & Frameworks | PHP | Servers` and set this server name.
+Then PHPStorm will use the corresponding path mappings.
 
-As example, an override could look like this:
+#### Enable/Disable XDebug in web server
 
-```yaml
-version: '3.4'
-
-services:
-  phraseanet:
-    environment:
-      # See https://docs.docker.com/docker-for-mac/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
-      # See https://github.com/docker/for-linux/issues/264
-      # The `remote_host` below may optionally be replaced with `remote_connect_back`
-      XDEBUG_CONFIG: >-
-        remote_enable=1
-        remote_host=host.docker.internal
-        remote_port=9001
-        idekey=PHPSTORM
-      # This should correspond to the server declared in PHPStorm `Preferences | Languages & Frameworks | PHP | Servers`
-      # Then PHPStorm will use the corresponding path mappings
-      PHP_IDE_CONFIG: serverName=phraseanet-docker
+```bash
+. bin/xdebug-enable.sh
+# or
+. bin/xdebug-disable.sh
 ```
 
-Then run:
+> Attention! XDebug enabling is base on environment variable. So XDebug will only be enabled if your run docker-compose commands from the same shell.
 
-````bash
-docker-compose up -d
-````
+#### Enable/Disable XDebug in dev container
 
-If `docker-compose.yml` and a `docker-compose.override.yml` are present on the same directory level, Docker Compose combines the two files into a single configuration, applying the configuration in the `docker-compose.override.yml` file over and in addition to the values in the `docker-compose.yml` file.
+```bash
+bin/shell.sh
+
+. docker-xdebug-enable
+# or
+. docker-xdebug-disable
+
+```
+
+> Don't forget the dot `.` before `docker-xdebug-enable`!
 
 ## Troubleshooting
 

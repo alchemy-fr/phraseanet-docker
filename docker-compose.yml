@@ -21,6 +21,7 @@ services:
   phraseanet:
     build:
       context: phraseanet
+      target: phraseanet_prod
     image: phraseanet
     networks:
       - internal
@@ -48,15 +49,15 @@ services:
       - data_vol:/var/data
 
   db:
-    image: mariadb
+    build:
+      context: db
     networks:
       - internal
     command: mysqld --sql_mode=""
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      - MYSQL_ROOT_PASSWORD
     volumes:
-     - ./db:/docker-entrypoint-initdb.d
      - db_vol:/var/lib/mysql
 
   rabbitmq:
