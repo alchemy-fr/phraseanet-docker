@@ -30,9 +30,11 @@ then
     bin/setup system:config set main.cache.options.host redis
     bin/setup system:config set main.cache.options.port 6379
     bin/setup system:config set main.cache.type Redis
-    bin/setup system:config set workers.queue.main-queue.host rabbitmq
-    bin/setup system:config set workers.queue.main-queue.user alchemy
-    bin/setup system:config set workers.queue.main-queue.password vdh4dpe5Wy3R
+    bin/setup system:config set workers.queue.worker-queue.host rabbitmq
+    bin/setup system:config set workers.queue.worker-queue.registry alchemy_worker.queue_registry
+    bin/setup system:config set workers.queue.worker-queue.port 5672
+    bin/setup system:config set workers.queue.worker-queue.user alchemy
+    bin/setup system:config set workers.queue.worker-queue.password vdh4dpe5Wy3R
     bin/setup system:config set main.storage.subdefs "${DATA_PATH}"
     bin/setup system:config set main.storage.cache /var/alchemy/Phraseanet/cache
     bin/setup system:config set main.storage.log /var/alchemy/Phraseanet/log
@@ -41,8 +43,8 @@ then
     bin/setup system:config set main.storage.caption /var/alchemy/Phraseanet/tmp/caption
     bin/setup system:config set rabbitmq.server.host rabbitmq
     bin/setup system:config set rabbitmq.server.port 5672
-    bin/setup system:config set rabbitmq.server.user guest
-    bin/setup system:config set rabbitmq.server.password guest
+    bin/setup system:config set rabbitmq.server.user alchemy
+    bin/setup system:config set rabbitmq.server.password vdh4dpe5Wy3R
     bin/setup system:config set rabbitmq.server.vhost /
 
     HOST_IP=$(/sbin/ip route|awk '/default/ { print $3 }');
