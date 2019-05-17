@@ -2,25 +2,35 @@ version: "3.4"
 services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    networks:
-      - internal
+    restart: on-failure
     ports:
       - ${PHPMYADMIN_PORT}:80
     depends_on:
       - db
 
+  db:
+    build: ./db
+
+  gateway:
+    volumes:
+        - alchemy_vol:/var/alchemy
+
   phraseanet:
-    build:
-      target: phraseanet_debug
-    environment:
-      - DOCKER_XDEBUG_ENABLED
-      - PHP_IDE_CONFIG=serverName=${SERVER_NAME}
+    #build:
+      #target: phraseanet_debug
+    #environment:
+      #- DOCKER_XDEBUG_ENABLED
+      #- PHP_IDE_CONFIG=serverName=${SERVER_NAME}
+    volumes:
+      - alchemy_vol:/var/alchemy
+
+  worker:
+    volumes:
+      - alchemy_vol:/var/alchemy
 
   dev:
     build:
       context: dev
-    networks:
-      - internal
     stdin_open: true
     tty: true
     hostname: local
@@ -44,3 +54,11 @@ services:
   rabbitmq:
     ports:
       - ${RABBITMQ_MANAGEMENT_PORT}:15672
+
+volumes:
+  alchemy_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${ALCHEMY_WORKSPACE_DIR}
+      o: bind
