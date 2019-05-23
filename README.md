@@ -11,28 +11,33 @@ Copy the `env.dist` file to an `.env` file and edit this file accordingly to you
 
 ## Integration mode
 
+The development and integration concerns are separated. On every `docker-compose` command, you can avoid working with `development-only` stuff by adding `-f docker-compose.yml` options on every `docker-compose  `commands.
+
+To simply mount the service, run :
+
     docker-compose -f docker-compose.yml up -d
+
+You can start your browser with localhost and the port you have configured on `.env`.
+The default parametrers allow you to reach the app with : `http://localhost:8082`
 
 To get logs :
 
     docker-compose logs -f
+
+## build
+
+To apply the last configuration changes made on every side service (db, elaticsearch. etc), run :
+
+    docker-compose build
 
 ## Development mode
 
 You need to mount your code onto the container via volumes
 The var ALCHEMY_WORKSPACE_DIR must be set to the location of your workspace
 
-## Development tools
 
-Now, install the Phraseanet application and databases:
 
-```bash
-./bin/install.sh
-```
-
-Start your browser at: `http://localhost/`
-
-### Credential
+## Credential
 
 - user: `admin@phrdocker.dev`
 - password: `admin`

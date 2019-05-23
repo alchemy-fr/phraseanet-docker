@@ -52,6 +52,7 @@ services:
 
   db:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-db:$PHRASEANET_DOCKER_TAG
+    build: ./db
     restart: on-failure
     environment:
       - MYSQL_ROOT_PASSWORD
@@ -102,6 +103,10 @@ volumes:
   # to be replacer by stdout/stderr
   logs_vol:
     driver: local
+    driver_opts:
+      type: none
+      device: $LOGS_DIR
+      o: bind
   # @TODO : waiting for a resolution
   resources_proxy:
     driver: local
