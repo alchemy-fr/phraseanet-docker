@@ -1,4 +1,4 @@
 FROM mariadb
 
 ADD ./docker/ /
-CMD ["command:" "mysqld" "--sql_mode=''"]   
+CMD ["mysqld" "--sql_mode=''"]   
