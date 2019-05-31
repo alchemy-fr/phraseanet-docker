@@ -1,0 +1,32 @@
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: db
+  spec:
+    clusterIP: None
+    ports:
+    - port: 3302
+      targetPort: 3302
+    selector:
+      app: phraseanet
+      tier: db
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: phraseanet-db
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: phraseanet
+        tier: db
+    template:
+      metadata:
+        labels:
+          app: phraseanet
+          tier: db
+      spec:
+        containers:
+        - name: db
+          image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-db:$PHRASEANET_DOCKER_TAG
