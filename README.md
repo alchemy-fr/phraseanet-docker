@@ -8,6 +8,15 @@
 ## Preparation
 
 Copy the `env.dist` file to an `.env` file and edit this file accordingly to your environment.
+Choose a path on your host to mount the volumes.
+
+Inside the directory, create the following subdirectories  :
+
+    /config
+    /logs
+    /data
+    /thumbnails
+
 
 ## Integration mode
 
@@ -34,8 +43,6 @@ To apply the last configuration changes made on every side service (db, elaticse
 
 You need to mount your code onto the container via volumes
 The var ALCHEMY_WORKSPACE_DIR must be set to the location of your workspace
-
-
 
 ## Credential
 
