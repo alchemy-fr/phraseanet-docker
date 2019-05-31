@@ -5,8 +5,9 @@ services:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-nginx:$PHRASEANET_DOCKER_TAG
     restart: on-failure
     volumes:
-        - data_vol:/var/data
-        - custom_vol:/var/alchemy/www/custom:rw
+        - data_vol:/var/alchemy/Phraseanet/datas:rw
+        - custom_vol:/var/alchemy/Phraseanet/www/custom:rw
+        - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
     depends_on:
       - phraseanet
     ports:
@@ -31,6 +32,7 @@ services:
       # @TODO : waiting for a resolution
       - resources_proxy:/var/alchemy/Phraseanet/resources/proxies:rw
       - logs_vol:/var/alchemy/Phraseanet/logs:rw
+      - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
 
   worker:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet:$PHRASEANET_DOCKER_TAG
@@ -48,7 +50,16 @@ services:
     - "/etc/supervisor/supervisord.conf"
     volumes:
       - data_vol:/var/alchemy/Phraseanet/datas:rw
+      - config_vol:/var/alchemy/Phraseanet/config:rw
+      - tmp_vol:/var/alchemy/Phraseanet/tmp:rw
+      - tmp_locks_vol:/var/alchemy/Phraseanet/tmp/locks:rw
+      - tmp_caption_vol:/var/alchemy/Phraseanet/tmp/caption:rw
+      - tmp_lazaret_vol:/var/alchemy/Phraseanet/tmp/lazaret:rw
+      - tmp_download_vol:/var/alchemy/Phraseanet/tmp/download:rw
+      # @TODO : waiting for a resolution
+      - resources_proxy:/var/alchemy/Phraseanet/resources/proxies:rw
       - logs_vol:/var/alchemy/Phraseanet/logs:rw
+      - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
 
   db:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-db:$PHRASEANET_DOCKER_TAG
@@ -81,6 +92,10 @@ services:
 volumes:
   data_vol:
     driver: local
+    driver_opts:
+      type: none
+      device: $VOLUMES_DIR/data
+      o: bind
   tmp_vol:
     driver: local
   tmp_locks_vol:
@@ -99,14 +114,24 @@ volumes:
     driver: local
   config_vol:
     driver: local
+    driver_opts:
+      type: none
+      device: $VOLUMES_DIR/config
+      o: bind
   custom_vol:
     driver: local
+  thumbnails_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: $VOLUMES_DIR/thumbnails
+      o: bind
   # to be replacer by stdout/stderr
   logs_vol:
     driver: local
     driver_opts:
       type: none
-      device: $LOGS_DIR
+      device: $VOLUMES_DIR/logs
       o: bind
   # @TODO : waiting for a resolution
   resources_proxy:

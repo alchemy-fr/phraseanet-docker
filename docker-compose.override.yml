@@ -23,29 +23,6 @@ services:
     volumes:
       - alchemy_vol:/var/alchemy
 
-  dev:
-    build:
-      context: dev
-    stdin_open: true
-    tty: true
-    hostname: local
-    environment:
-      - SYMFONY_ENV
-      - SSH_AUTH_SOCK=/ssh-auth-sock
-      - DOCKER_XDEBUG_ENABLED
-      - PHP_IDE_CONFIG=serverName=${SERVER_NAME}
-    depends_on:
-      - db
-      - redis
-      - rabbitmq
-      - elasticsearch
-      - phraseanet
-    volumes:
-      - alchemy_vol:/var/alchemy
-      - data_vol:/var/data
-      - dev_vol:/home/app
-      - ~/.ssh:/home/app/.ssh
-
   rabbitmq:
     ports:
       - ${RABBITMQ_MANAGEMENT_PORT}:15672
