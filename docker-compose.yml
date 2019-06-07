@@ -40,6 +40,8 @@ services:
     - INSTALL_APPBOX
     - INSTALL_DATABOX
     - INSTALL_SERVER_NAME
+    - INSTALL_RABBITMQ_USER=$RABBITMQ_DEFAULT_USER
+    - INSTALL_RABBITMQ_PASSWORD=$RABBITMQ_DEFAULT_PASS
     volumes:
       - data_vol:/var/alchemy/Phraseanet/datas:rw
       - config_vol:/var/alchemy/Phraseanet/config:rw
@@ -68,22 +70,12 @@ services:
     - OPCACHE_ENABLED
     - SESSION_CACHE_LIMITER
     - PHP_LOG_LEVEL
-    - INSTALL_ACCOUNT_EMAI
-    - INSTALL_ACCOUNT_PASSWORD
-    - INSTALL_DB_HOST
-    - INSTALL_DB_PORT
-    - INSTALL_DB_USER
-    - INSTALL_DB_PASSWORD
-    - INSTALL_DB_TEMPLATE
-    - INSTALL_APPBOX
-    - INSTALL_DATABOX
-    - INSTALL_SERVER_NAME
 
     command:
-    - "/usr/bin/supervisord"
-    - "-n"
-    - "-c"
-    - "/etc/supervisor/supervisord.conf"
+    - "php"
+    - "/var/alchemy/Phraseanet/bin/console"
+    - "task-manager:scheduler:run"
+
     volumes:
       - data_vol:/var/alchemy/Phraseanet/datas:rw
       - config_vol:/var/alchemy/Phraseanet/config:rw
