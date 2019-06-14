@@ -1,0 +1,51 @@
+version: "3.4"
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: "10.5.0.0/16"
+          gateway: "10.5.0.1"
+
+services:
+    gateway:
+      logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.5.0.1:5000"
+
+  phraseanet:
+      logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.5.0.1:5000"
+
+  worker:
+      logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.5.0.1:5000"
+
+  db:
+      logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.5.0.1:5000"
+
+  rabbitmq:
+      logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.5.0.1:5000"
+
+  redis:
+      logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.5.0.1:5000"
+
+  elasticsearch:
+      logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.5.0.1:5000"
