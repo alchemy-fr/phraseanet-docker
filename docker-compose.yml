@@ -86,7 +86,6 @@ services:
   db:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-db:$PHRASEANET_DOCKER_TAG
     build: ./db
-    command: mysqld --sql_mode=""
     restart: on-failure
     environment:
       - MYSQL_ROOT_PASSWORD
