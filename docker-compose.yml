@@ -46,12 +46,6 @@ services:
       - data_vol:/var/alchemy/Phraseanet/datas:rw
       - config_vol:/var/alchemy/Phraseanet/config:rw
       - tmp_vol:/var/alchemy/Phraseanet/tmp:rw
-      - tmp_locks_vol:/var/alchemy/Phraseanet/tmp/locks:rw
-      - tmp_caption_vol:/var/alchemy/Phraseanet/tmp/caption:rw
-      - tmp_lazaret_vol:/var/alchemy/Phraseanet/tmp/lazaret:rw
-      - tmp_download_vol:/var/alchemy/Phraseanet/tmp/download:rw
-      # @TODO : waiting for a resolution
-      - resources_proxy:/var/alchemy/Phraseanet/resources/proxies:rw
       - logs_vol:/var/alchemy/Phraseanet/logs:rw
       - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
 
@@ -74,12 +68,6 @@ services:
       - data_vol:/var/alchemy/Phraseanet/datas:rw
       - config_vol:/var/alchemy/Phraseanet/config:rw
       - tmp_vol:/var/alchemy/Phraseanet/tmp:rw
-      - tmp_locks_vol:/var/alchemy/Phraseanet/tmp/locks:rw
-      - tmp_caption_vol:/var/alchemy/Phraseanet/tmp/caption:rw
-      - tmp_lazaret_vol:/var/alchemy/Phraseanet/tmp/lazaret:rw
-      - tmp_download_vol:/var/alchemy/Phraseanet/tmp/download:rw
-      # @TODO : waiting for a resolution
-      - resources_proxy:/var/alchemy/Phraseanet/resources/proxies:rw
       - logs_vol:/var/alchemy/Phraseanet/logs:rw
       - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
 
@@ -120,14 +108,6 @@ volumes:
       o: bind
   tmp_vol:
     driver: local
-  tmp_locks_vol:
-    driver: local
-  tmp_caption_vol:
-    driver: local
-  tmp_lazaret_vol:
-    driver: local
-  tmp_download_vol:
-    driver: local
   db_vol:
     driver: local
   elasticsearch_vol:
@@ -155,6 +135,3 @@ volumes:
       type: none
       device: $VOLUMES_DIR/logs
       o: bind
-  # @TODO : waiting for a resolution
-  resources_proxy:
-    driver: local
