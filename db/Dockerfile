@@ -9,3 +9,4 @@ RUN apt-get update && \
 ADD ./docker/ /
 
 ENTRYPOINT ["/phraseanet-entrypoint.sh"]
+CMD ["mysqld","--sql_mode="]
