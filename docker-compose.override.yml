@@ -17,11 +17,11 @@ services:
       #- DOCKER_XDEBUG_ENABLED
       #- PHP_IDE_CONFIG=serverName=${SERVER_NAME}
     volumes:
-      - alchemy_vol:/var/alchemy
+      - alchemy_vol:/var/alchemy/Phraseanet
 
   worker:
     volumes:
-      - alchemy_vol:/var/alchemy
+      - alchemy_vol:/var/alchemy/Phraseanet
 
   rabbitmq:
     ports:

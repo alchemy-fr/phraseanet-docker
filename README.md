@@ -2,92 +2,55 @@
 
 ## Prerequisites
 
-- docker-compose
+- docker-compose >= 1.24.1
 - docker >=v18.01-ce
 
-## Preparation
+The phraseanet Docker images are build and tagged from the `Phraseanet` git repository, according to its `README.md` file.
+
+## Environment configuration
 
 Copy the `env.dist` file to an `.env` file and edit this file accordingly to your environment.
-Choose a path on your host to mount the volumes.
 
-Inside the directory, create the following subdirectories  :
+In particular, a `VOLUMES_DIR` var allow you to define a location on your host where to mount the volumes.
 
-    /config
+Inside this directory, create the following subdirectories  :
+
+    /config/web/templates
     /logs
     /data
     /thumbnails
 
+## Integration mode VS developpement mode
 
-## Integration mode
+You can run the service using two different modes.
 
-The development and integration concerns are separated. On every `docker-compose` command, you can avoid working with `development-only` stuff by adding `-f docker-compose.yml` options on every `docker-compose  `commands.
+If you don't expect to work on the development of the application, you may choose this mode.
+You simply have to remove the `docker-compose.override.yml`, as this file contain only the development mode concerns.
 
-To simply mount the service, run :
+If you have to work on the project, you need to specify the workspace by setting `ALCHEMY_WORKSPACE_DIR` with the root of your workspace application.
 
-    docker-compose -f docker-compose.yml up -d
+# Deploy the application
 
-You can start your browser with localhost and the port you have configured on `.env`.
-The default parametrers allow you to reach the app with : `http://localhost:8082`
+At the root of the project directory, run the following :
 
-To get logs :
+    docker-compose build && docker-compose up -d
+
+This entire command have to be run to apply the last configuration changes made on every side service (db, elaticsearch).
+In dev mode, every changes in the application code will be applied automatically.
+
+
+# Browse the application
+
+The default parameters allow you to reach the app on the url : `http://localhost:8082`
+
+You can watch the application logs with :
 
     docker-compose logs -f
 
-## build
+Additionnal logs information are presents in the `/logs` directory.
 
-To apply the last configuration changes made on every side service (db, elaticsearch. etc), run :
 
-    docker-compose build
-
-## Development mode
-
-You need to mount your code onto the container via volumes
-The var ALCHEMY_WORKSPACE_DIR must be set to the location of your workspace
-
-## Credential
-
-- user: `admin@phrdocker.dev`
-- password: `admin`
-
-```bash
-bin/shell.sh
-```
-
-If you need root access, you can run:
-```bash
-bin/shell.sh root
-```
-
-### Configure Xdebug with Docker Compose Override
-
-Server name defaults to `phraseanet-docker`. You should use this value in your IDE.
-If you use PHPStorm, go to `Preferences | Languages & Frameworks | PHP | Servers` and set this server name.
-Then PHPStorm will use the corresponding path mappings.
-
-### Enable/Disable XDebug in web server
-
-```bash
-. bin/xdebug-enable.sh
-# or
-. bin/xdebug-disable.sh
-```
-
-> Attention! XDebug enabling is base on environment variable. So XDebug will only be enabled if your run docker-compose commands from the same shell.
-
-#### Enable/Disable XDebug in dev container
-
-```bash
-bin/shell.sh
-
-. docker-xdebug-enable
-# or
-. docker-xdebug-disable
-
-```
-
-> Don't forget the dot `.` before `docker-xdebug-enable`!
-
-## Troubleshooting
+# Troubleshooting
 
 Help! I get the following error:
 
