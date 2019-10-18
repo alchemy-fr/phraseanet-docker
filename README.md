@@ -29,6 +29,17 @@ You simply have to remove the `docker-compose.override.yml`, as this file contai
 
 If you have to work on the project, you need to specify the workspace by setting `ALCHEMY_WORKSPACE_DIR` with the root of your workspace application.
 
+## Development mode
+
+You don't have to install any PHP version on your host, nor any vendor library yourself.
+As the code doesn't carry any copy of vendor library, you have to import these libraries with the following command :
+
+    docker-compose run phraseanet make
+
+Each time you add a new vendors, you will have to run this command.
+
+You aslo need to re-deploy the application (see the folowing)
+
 # Deploy the application
 
 At the root of the project directory, run the following :

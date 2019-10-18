@@ -10,7 +10,7 @@ services:
 
   gateway:
     volumes:
-        - alchemy_vol:/var/alchemy
+        - alchemy_vol:/var/alchemy/Phraseanet
 
   phraseanet:
     #environment:
