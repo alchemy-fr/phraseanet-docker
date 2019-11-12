@@ -13,6 +13,7 @@ Choose a path on your host to mount the volumes.
 Inside the directory, create the following subdirectories  :
 
     /config
+    /config/templates/web
     /logs
     /data
     /thumbnails
