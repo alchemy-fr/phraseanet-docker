@@ -14,6 +14,7 @@ Inside the directory, create the following subdirectories  :
 
     /config
     /config/templates/web
+    /config/templates/mobile
     /logs
     /data
     /thumbnails
