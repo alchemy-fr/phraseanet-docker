@@ -86,7 +86,26 @@ All your data will be kept for the next usage.
 ### Development mode
 
 You need to mount your code onto the container via volumes
-The var ALCHEMY_WORKSPACE_DIR must be set to the location of your workspace
+The var ALCHEMY_WORKSPACE_DIR must be set to the location of your `Phraseanet` workspace.
+
+The developpement mode uses the `docker-compose-override.yml` file.
+
+You can run it with :
+
+    docker-compose up -d
+
+To get logs :
+
+    docker-compose logs -f
+
+
+The environment is not yet ready : you have to fetch all dependencies.
+
+This can be made easily from the phraseanet container :
+
+    docker-compose run phraseanet make
+
+
 
 ### Credential
 
