@@ -48,6 +48,7 @@ services:
       - tmp_vol:/var/alchemy/Phraseanet/tmp:rw
       - logs_vol:/var/alchemy/Phraseanet/logs:rw
       - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
+      - custom_vol:/var/alchemy/Phraseanet/www/custom:rw
 
   worker:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-worker:$PHRASEANET_DOCKER_TAG
@@ -110,10 +111,16 @@ volumes:
     driver: local
   db_vol:
     driver: local
+    driver_opts:
+      type: none
+      device: $VOLUMES_DIR/db
+      o: bind
   elasticsearch_vol:
     driver: local
-  dev_vol:
-    driver: local
+    driver_opts:
+      type: none
+      device: $VOLUMES_DIR/elasticsearch
+      o: bind
   config_vol:
     driver: local
     driver_opts:
@@ -122,6 +129,10 @@ volumes:
       o: bind
   custom_vol:
     driver: local
+    driver_opts:
+      type: none
+      device: $VOLUMES_DIR/custom
+      o: bind
   thumbnails_vol:
     driver: local
     driver_opts:

@@ -7,44 +7,88 @@
 
 ## Preparation
 
-Copy the `env.dist` file to an `.env` file and edit this file accordingly to your environment.
-Choose a path on your host to mount the volumes.
+### Docker images
 
-Inside the directory, create the following subdirectories  :
+You have to build the phraseanet images from the Phraseanet repository (follow the README instruction inside it).
+
+### Volumes
+
+All the binding will be made inside one directory on your host : you have to create this dorectory at your prefered location.
+
+Inside this directory, create the following subdirectories  :
 
     /config
     /logs
     /data
     /thumbnails
+    /elasticsearch
+    /custom
+    /db
 
+You can also let the helper `./bin/create-volume-dir.sh` create all theses directories for you :
 
-## Integration mode
+    ./bin/create-volume-dir.sh <path_to_your_volume_dir>
 
-The development and integration concerns are separated. On every `docker-compose` command, you can avoid working with `development-only` stuff by adding `-f docker-compose.yml` options on every `docker-compose  `commands.
+### Environment
 
-To simply mount the service, run :
+Copy the `env.dist` file to an `.env` file and edit this file accordingly to your environment,  especially :
+
+* `PHRASEANET_DOCKER_TAG` : tag of the Docker images. Set it to the tag you choose during the build phase. By defaut, it's set to `master`.
+* `VOLUMES_DIR` : the path you've chosen as volumes to store Phraseanet data on your host.
+* `INSTALL_ACCOUNT_EMAIL` : the email address that will be used for the fist account
+* `INSTALL_ACCOUNT_PASSWORD` : the according password
+* `PHRASEANET_APP_PORT` : the port of the HTTP application (default=8082)
+
+If you are not interested in the developpement of Phraseanet, you can ignore everything after the `DEV Purpose` annotation.
+
+You can set every parameters according to your preferences.
+
+### Run the service
+
+To mount the service, go to the project root directory and run :
 
     docker-compose -f docker-compose.yml up -d
 
+Why this option `-f docker-compose.yml` ?
+
+The development and integration concerns are separated using a `docker-compose.override.yml`. By default, `docker-compose` will include this files if it exists.
+
+If you don't work on phraseanet developpement, avoiding this `-f docker-compose.yml` parameters will throw errors. So you have to add this options on every `docker-compose` commands to avoid this inclusion.
+
+You can also delete the `docker-compose.override.yml` to get free from this behavior.
+
+### Using the application
+
 You can start your browser with localhost and the port you have configured on `.env`.
-The default parametrers allow you to reach the app with : `http://localhost:8082`
+The default parameters allow you to reach the app with : `http://localhost:8082`
 
-To get logs :
+### How to get application logs
 
-    docker-compose logs -f
+Run the following command at the root directory level :
 
-## build
+    docker-compose -f docker-compose.yml logs -f
+
+### re-build application
 
 To apply the last configuration changes made on every side service (db, elaticsearch. etc), run :
 
-    docker-compose build
+    docker-compose -f docker-compose.yml build
 
-## Development mode
+### Stop the application
+
+You can stop the application with :
+
+    docker-compose -f docker-compose.yml down
+
+All your data will be kept for the next usage.
+
+
+### Development mode
 
 You need to mount your code onto the container via volumes
 The var ALCHEMY_WORKSPACE_DIR must be set to the location of your workspace
 
-## Credential
+### Credential
 
 - user: `admin@phrdocker.dev`
 - password: `admin`
