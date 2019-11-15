@@ -106,53 +106,10 @@ This can be made easily from the phraseanet container :
     docker-compose run phraseanet make
 
 
+# How to change volumes location
 
-### Credential
+Before moving all the files, or to use a different location, you have to remove all containers and volume definitions with the following command :
 
-- user: `admin@phrdocker.dev`
-- password: `admin`
+    docker-compose down --volumes
 
-```bash
-bin/shell.sh
-```
-
-If you need root access, you can run:
-```bash
-bin/shell.sh root
-```
-
-### Configure Xdebug with Docker Compose Override
-
-Server name defaults to `phraseanet-docker`. You should use this value in your IDE.
-If you use PHPStorm, go to `Preferences | Languages & Frameworks | PHP | Servers` and set this server name.
-Then PHPStorm will use the corresponding path mappings.
-
-### Enable/Disable XDebug in web server
-
-```bash
-. bin/xdebug-enable.sh
-# or
-. bin/xdebug-disable.sh
-```
-
-> Attention! XDebug enabling is base on environment variable. So XDebug will only be enabled if your run docker-compose commands from the same shell.
-
-#### Enable/Disable XDebug in dev container
-
-```bash
-bin/shell.sh
-
-. docker-xdebug-enable
-# or
-. docker-xdebug-disable
-
-```
-
-> Don't forget the dot `.` before `docker-xdebug-enable`!
-
-## Troubleshooting
-
-Help! I get the following error:
-
-- `Error response from daemon: error while mounting volume '/var/lib/docker/volumes/phraseanet_alchemy_vol/_data': error while mounting volume with options: type='none' device='/var/alchemy' o='bind': no such file or directory`
- You may have forgotten to define your `ALCHEMY_WORKSPACE_DIR` environment variable.
+Then move the files and set the `VOLUMES_DIR` to the new location.
