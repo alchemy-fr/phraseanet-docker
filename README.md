@@ -113,3 +113,15 @@ Before moving all the files, or to use a different location, you have to remove 
     docker-compose down --volumes
 
 Then move the files and set the `VOLUMES_DIR` to the new location.
+
+
+# Troubleshooting and Workaround
+
+You might be facing an issue with the worker container staying in a restarting state. You first need to check the status of the container with the following command :
+
+    docker ps
+    
+If the container is indeed in a restarting state, run the following commands inside the FPM container to check if the right ownership is granted to the logs directory and modify it accordingly (owner and group should be app instead of root) :
+
+    docker exec -it <id_of_fpm_container> /bin/bash
+    chown app:app logs
