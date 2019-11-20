@@ -103,7 +103,7 @@ The environment is not yet ready : you have to fetch all dependencies.
 
 This can be made easily from the phraseanet container :
 
-    docker-compose run phraseanet make
+    docker-compose exec -u app phraseanet make
 
 
 # How to change volumes location
