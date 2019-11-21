@@ -27,6 +27,7 @@ jobs:
       - run:
           name: Reset docker stack
           command: |-
+            cp env.dist .env
             docker-compose down
             docker volume rm "${COMPOSE_PROJECT_NAME}_alchemy_vol" || true
             docker volume rm "${COMPOSE_PROJECT_NAME}_data_vol" || true
