@@ -11,7 +11,7 @@
 
 You have to build the phraseanet images from the Phraseanet repository (follow the README instruction inside it).
 
-https://github.com/alchemy-fr/Phraseanet/blob/master/README.md
+https://github.com/alchemy-fr/Phraseanet
 
 ### Volumes
 
