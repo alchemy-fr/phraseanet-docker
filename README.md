@@ -11,6 +11,8 @@
 
 You have to build the phraseanet images from the Phraseanet repository (follow the README instruction inside it).
 
+https://github.com/alchemy-fr/Phraseanet/blob/master/README.md
+
 ### Volumes
 
 All the binding will be made inside one directory on your host : you have to create this dorectory at your prefered location.
