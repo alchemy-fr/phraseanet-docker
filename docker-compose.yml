@@ -42,6 +42,9 @@ services:
     - INSTALL_SERVER_NAME
     - INSTALL_RABBITMQ_USER=$RABBITMQ_DEFAULT_USER
     - INSTALL_RABBITMQ_PASSWORD=$RABBITMQ_DEFAULT_PASS
+    - XDEBUG
+    - XDEBUG_REMOTE_PORT
+    - XDEBUG_SERVER=$DOCKER_NETWORK_GATEWAY
     volumes:
       - data_vol:/var/alchemy/Phraseanet/datas:rw
       - config_vol:/var/alchemy/Phraseanet/config:rw

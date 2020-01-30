@@ -1,4 +1,11 @@
 version: "3.4"
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: $DOCKER_NETWORK_CIDR
+
 services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
