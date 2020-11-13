@@ -13,6 +13,19 @@ You have to build the phraseanet images from the Phraseanet repository (follow t
 
 https://github.com/alchemy-fr/Phraseanet
 
+Or use Phraseanet images from docker hub
+Retrieve on Docker hub prebuilt images for Phraseanet.
+
+https://hub.docker.com/r/alchemyfr/phraseanet-fpm
+
+https://hub.docker.com/r/alchemyfr/phraseanet-worker
+
+https://hub.docker.com/r/alchemyfr/phraseanet-nginx
+
+https://hub.docker.com/repository/docker/alchemyfr/phraseanet-db
+
+https://hub.docker.com/repository/docker/alchemyfr/phraseanet-elasticsearch
+
 ### Volumes
 
 All the binding will be made inside one directory on your host : you have to create this dorectory at your prefered location.
