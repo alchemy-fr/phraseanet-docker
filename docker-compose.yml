@@ -5,14 +5,17 @@ services:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-nginx:$PHRASEANET_DOCKER_TAG
     restart: on-failure
     volumes:
-        - data_vol:/var/alchemy/Phraseanet/datas:rw
-        - custom_vol:/var/alchemy/Phraseanet/www/custom:rw
-        - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
+    - ${PHRASEANET_DATA_DIR}:/var/alchemy/Phraseanet/datas:rw
+    - ${PHRASEANET_THUMBNAILS_DIR}:/var/alchemy/Phraseanet/www/thumbnails:rw
+    - ${PHRASEANET_CUSTOM_DIR}:/var/alchemy/Phraseanet/www/custom:rw
+    - ${PHRASEANET_PLUGINS_DIR}:/var/alchemy/Phraseanet/www/plugins:rw
     depends_on:
-      - phraseanet
+    - phraseanet
     environment:
-      - MAX_BODY_SIZE
-
+    - MAX_BODY_SIZE
+    - GATEWAY_SEND_TIMEOUT
+    - GATEWAY_PROXY_TIMEOUT
+    - GATEWAY_FASTCGI_TIMEOUT
     ports:
       - ${PHRASEANET_APP_PORT}:80
 
@@ -20,74 +23,125 @@ services:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-fpm:$PHRASEANET_DOCKER_TAG
     restart: on-failure
     depends_on:
-      - db
-      - redis
-      - rabbitmq
-      - elasticsearch
+    - db
+    - redis
+    - rabbitmq
+    - elasticsearch
     environment:
+    - PHRASEANET_PROJECT_NAME
+    - PHRASEANET_TRUSTED_PROXIES
     - MAX_BODY_SIZE
     - MAX_INPUT_VARS
+    - MAX_EXECUTION_TIME
+    - MAX_INPUT_TIME
+    - REQUEST_TERMINATE_TIMEOUT
     - OPCACHE_ENABLED
     - SESSION_CACHE_LIMITER
     - PHP_LOG_LEVEL
-    - INSTALL_ACCOUNT_EMAIL
-    - INSTALL_ACCOUNT_PASSWORD
-    - INSTALL_DB_HOST
-    - INSTALL_DB_PORT
-    - INSTALL_DB_USER
-    - INSTALL_DB_PASSWORD
+    - PHRASEANET_ADMIN_ACCOUNT_ID
+    - PHRASEANET_ADMIN_ACCOUNT_EMAIL
+    - PHRASEANET_ADMIN_ACCOUNT_PASSWORD
+    - PHRASEANET_DB_HOST
+    - PHRASEANET_DB_PORT
+    - PHRASEANET_DB_USER
+    - PHRASEANET_DB_PASSWORD
     - INSTALL_DB_TEMPLATE
     - INSTALL_APPBOX
     - INSTALL_DATABOX
-    - INSTALL_SERVER_NAME
-    - INSTALL_RABBITMQ_USER=$RABBITMQ_DEFAULT_USER
-    - INSTALL_RABBITMQ_PASSWORD=$RABBITMQ_DEFAULT_PASS
+    - PHRASEANET_SERVER_NAME
+    - PHRASEANET_RABBITMQ_USER=$RABBITMQ_DEFAULT_USER
+    - PHRASEANET_RABBITMQ_PASSWORD=$RABBITMQ_DEFAULT_PASS
+    - PHRASEANET_EMITTER_EMAIL
+    - PHRASEANET_MAIL_OBJECT_PREFIX
+    - PHRASEANET_SMTP_ENABLED
+    - PHRASEANET_SMTP_HOST
+    - PHRASEANET_SMTP_PORT
+    - PHRASEANET_SMTP_AUTH_ENABLED
+    - PHRASEANET_SMTP_SECURE_MODE
+    - PHRASEANET_SMTP_USER
+    - PHRASEANET_SMTP_PASSWORD
+    - PHRASEANET_DOWNLOAD_DIR
+    - PHRASEANET_LAZARET_DIR
+    - PHRASEANET_CAPTION_DIR
+    - PHRASEANET_WORKER_TMP
+    - PHRASEANET_FFMPEG_TIMEOUT
+    - PHRASEANET_FFPROBE_TIMEOUT
+    - PHRASEANET_GS_TIMEOUT
+    - PHRASEANET_MP4BOX_TIMEOUT
+    - PHRASEANET_SWFTOOLS_TIMEOUT
+    - PHRASEANET_UNOCON_TIMEOUT
+    - PHRASEANET_EXIFTOOL_TIMEOUT
+    - PHRASEANET_API_ENABLED
+    - PHRASEANET_API_SSL
+    - PHRASEANET_API_AUTH_TOKEN_HEADER_ONLY
+    - LC_MESSAGES=C.UTF-8
+    - LC_COLLATE=C.UTF-8
+    - LC_IDENTIFICATION=C.UTF-8
+    - LANG=C.UTF-8
+    - LC_MEASUREMENT=C.UTF-8   
+    - LC_CTYPE=C.UTF-8
+    - LC_TIME=C.UTF-8
+    - LC_NAME=C.UTF-8
+
     volumes:
-      - data_vol:/var/alchemy/Phraseanet/datas:rw
-      - config_vol:/var/alchemy/Phraseanet/config:rw
-      - tmp_vol:/var/alchemy/Phraseanet/tmp:rw
-      - logs_vol:/var/alchemy/Phraseanet/logs:rw
-      - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
-      - custom_vol:/var/alchemy/Phraseanet/www/custom:rw
+    - ${PHRASEANET_CONFIG_DIR}:/var/alchemy/Phraseanet/config:rw
+    - ${PHRASEANET_LOGS_DIR}:/var/alchemy/Phraseanet/logs:rw
+    - ${PHRASEANET_DATA_DIR}:/var/alchemy/Phraseanet/datas:rw
+    - ${PHRASEANET_THUMBNAILS_DIR}:/var/alchemy/Phraseanet/www/thumbnails:rw
+    - ${PHRASEANET_CUSTOM_DIR}:/var/alchemy/Phraseanet/www/custom:rw
+    - ${PHRASEANET_PLUGINS_DIR}:/var/alchemy/Phraseanet/www/plugins:rw
+    - ${PHRASEANET_CACHE_DIR}:/var/alchemy/Phraseanet/cache:rw
+    - ${PHRASEANET_TMP_DIR}:/var/alchemy/Phraseanet/tmp:rw
 
   worker:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-worker:$PHRASEANET_DOCKER_TAG
     restart: on-failure
     depends_on:
-      - db
-      - redis
-      - rabbitmq
-      - elasticsearch
+    - db
+    - redis
+    - rabbitmq
+    - elasticsearch
     environment:
+    - PHRASEANET_PROJECT_NAME
+    - PHRASEANET_TRUSTED_PROXIES
     - MAX_BODY_SIZE
     - MAX_INPUT_VARS
     - OPCACHE_ENABLED
     - SESSION_CACHE_LIMITER
     - PHP_LOG_LEVEL
+    - LC_MESSAGES=C.UTF-8
+    - LC_COLLATE=C.UTF-8
+    - LC_IDENTIFICATION=C.UTF-8
+    - LANG=C.UTF-8
+    - LC_MEASUREMENT=C.UTF-8   
+    - LC_CTYPE=C.UTF-8
+    - LC_TIME=C.UTF-8
+    - LC_NAME=C.UTF-8
 
     volumes:
-      - data_vol:/var/alchemy/Phraseanet/datas:rw
-      - config_vol:/var/alchemy/Phraseanet/config:rw
-      - tmp_vol:/var/alchemy/Phraseanet/tmp:rw
-      - logs_vol:/var/alchemy/Phraseanet/logs:rw
-      - thumbnails_vol:/var/alchemy/Phraseanet/www/thumbnails:rw
+    - ${PHRASEANET_CONFIG_DIR}:/var/alchemy/Phraseanet/config:rw
+    - ${PHRASEANET_LOGS_DIR}:/var/alchemy/Phraseanet/logs:rw
+    - ${PHRASEANET_DATA_DIR}:/var/alchemy/Phraseanet/datas:rw
+    - ${PHRASEANET_THUMBNAILS_DIR}:/var/alchemy/Phraseanet/www/thumbnails:rw
+    - ${PHRASEANET_CUSTOM_DIR}:/var/alchemy/Phraseanet/www/custom:rw
+    - ${PHRASEANET_CACHE_DIR}:/var/alchemy/Phraseanet/cache:rw
+    - ${PHRASEANET_TMP_DIR}:/var/alchemy/Phraseanet/tmp:rw
 
   db:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-db:$PHRASEANET_DOCKER_TAG
-    build: ./db
     restart: on-failure
     environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_MAX_ALLOWED_PACKET
+    - MYSQL_ROOT_PASSWORD
+    - MYSQL_MAX_ALLOWED_PACKET
     volumes:
-     - db_vol:/var/lib/mysql
+    - ${PHRASEANET_DB_DIR}:/var/lib/mysql
 
   rabbitmq:
     image: rabbitmq:3-management
     restart: on-failure
     environment:
-      - RABBITMQ_DEFAULT_USER
-      - RABBITMQ_DEFAULT_PASS
+    - RABBITMQ_DEFAULT_USER
+    - RABBITMQ_DEFAULT_PASS
 
   redis:
     image: redis
@@ -95,54 +149,37 @@ services:
 
   elasticsearch:
     image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-elasticsearch:$PHRASEANET_DOCKER_TAG
-    build: ./elasticsearch
     restart: on-failure
     volumes:
-      - elasticsearch_vol:/usr/share/elasticsearch/data
+    - ${PHRASEANET_ELASTICSEARCH_DIR}:/usr/share/elasticsearch/data
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+    - 1025:1025
+    - 8025:8025
 
 volumes:
+  config_vol:
+    driver: local
   data_vol:
     driver: local
-    driver_opts:
-      type: none
-      device: $VOLUMES_DIR/data
-      o: bind
   tmp_vol:
     driver: local
   db_vol:
     driver: local
-    driver_opts:
-      type: none
-      device: $VOLUMES_DIR/db
-      o: bind
   elasticsearch_vol:
     driver: local
-    driver_opts:
-      type: none
-      device: $VOLUMES_DIR/elasticsearch
-      o: bind
-  config_vol:
-    driver: local
-    driver_opts:
-      type: none
-      device: $VOLUMES_DIR/config
-      o: bind
-  custom_vol:
-    driver: local
-    driver_opts:
-      type: none
-      device: $VOLUMES_DIR/custom
-      o: bind
   thumbnails_vol:
     driver: local
-    driver_opts:
-      type: none
-      device: $VOLUMES_DIR/thumbnails
-      o: bind
+  custom_vol:
+    driver: local
+  plugins_dir:
+    driver: local
+  cache_vol:
+    driver: local
   # to be replacer by stdout/stderr
   logs_vol:
     driver: local
-    driver_opts:
-      type: none
-      device: $VOLUMES_DIR/logs
-      o: bind
+  dev_vol:
+    driver: local
