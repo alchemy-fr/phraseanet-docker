@@ -1,2 +1,6 @@
-**/.php
-**/.data
+*
+
+!.gitignore
+!README.md
+!.env
+!*/
