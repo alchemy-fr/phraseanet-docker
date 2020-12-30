@@ -27,15 +27,5 @@ jobs:
       - run:
           name: Reset docker stack
           command: |-
-            docker-compose down
-            docker volume rm "${COMPOSE_PROJECT_NAME}_alchemy_vol" || true
-            docker volume rm "${COMPOSE_PROJECT_NAME}_data_vol" || true
-            docker volume rm "${COMPOSE_PROJECT_NAME}_db_vol" || true
-            docker volume rm "${COMPOSE_PROJECT_NAME}_dev_vol" || true
-            docker volume rm "${COMPOSE_PROJECT_NAME}_elasticsearch_vol" || true
-      - run:
-          name: Build application Docker image
-          command: |-
-            # Avoid volume creation with local binding (Docker is run on remote host on CircleCI):
-            docker volume create --name "${COMPOSE_PROJECT_NAME}_alchemy_vol"
-            bin/install.sh
+            cp env.dist .env
+            docker-compose build
