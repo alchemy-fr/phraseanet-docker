@@ -1,9 +1,22 @@
 # Phraseanet Docker stack
 
+This is an example Phraseanet docker-compose deployement for Phraseanet.
+
+This deployment require some adaptation to the environement. 
+
+For dev and test Phraseanet please use the docker-compose and dockerfile include in Phraseanet git repositorie 
+
+https://github.com/alchemy-fr/Phraseanet
+
 ## Prerequisites
 
-- docker-compose
+- docker-compose >=v1.25.4
 - docker >=v18.01-ce
+
+Note about elasticsearch container Check this link 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-prod-prerequisites
+
+
 
 ## Preparation
 
