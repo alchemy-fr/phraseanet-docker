@@ -22,68 +22,50 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#dock
 
 ### Docker images
 
-You have to build the phraseanet images from the Phraseanet repository (follow the README instruction inside it).
-
-https://github.com/alchemy-fr/Phraseanet
-
-Or use Phraseanet images from docker hub
-Retrieve on Docker hub prebuilt images for Phraseanet.
-
-https://hub.docker.com/r/alchemyfr/phraseanet-fpm
-
-https://hub.docker.com/r/alchemyfr/phraseanet-worker
-
-https://hub.docker.com/r/alchemyfr/phraseanet-nginx
-
-https://hub.docker.com/repository/docker/alchemyfr/phraseanet-db
-
-https://hub.docker.com/repository/docker/alchemyfr/phraseanet-elasticsearch
+Using this docker-compose file will pull all required images from dockerhub except otherwise configured in the .env file.
 
 ### Volumes
 
-All the binding will be made inside one directory on your host : you have to create this dorectory at your prefered location.
-
-Inside this directory, create the following subdirectories  :
-
-    /config
-    /logs
-    /data
-    /thumbnails
-    /elasticsearch
-    /custom
-    /db
-
-You can also let the helper `./bin/create-volume-dir.sh` create all theses directories for you :
-
-    ./bin/create-volume-dir.sh <path_to_your_volume_dir>
+All the binding will be made inside one directory on your host : you have to create this directorys at your prefered location.
+All necessary directorys will be created when you pull from GitHub. If you decide to move them, you have to alter this in the `.env` file.
+```
+PHRASEANET_CONFIG_DIR=./config
+PHRASEANET_LOGS_DIR=./logs
+PHRASEANET_DATA_DIR=./datas
+PHRASEANET_DB_DIR=./volumes/db
+PHRASEANET_ELASTICSEARCH_DIR=./volumes/elasticsearch
+PHRASEANET_THUMBNAILS_DIR=./www/thumbnails
+PHRASEANET_CUSTOM_DIR=./www/custom
+PHRASEANET_PLUGINS_DIR=./www/plugins
+PHRASEANET_TMP_DIR=./tmp
+PHRASEANET_CACHE_DIR=./cache
+PHRASEANET_DOWNLOAD_DIR=./datas/download
+PHRASEANET_LAZARET_DIR=./datas/lazaret
+PHRASEANET_CAPTION_DIR=./tmp/caption
+PHRASEANET_WORKER_TMP=./tmp/worker
+```
 
 ### Environment
 
-Copy the `env.dist` file to an `.env` file and edit this file accordingly to your environment,  especially :
+Edit the `.env` file according to your environment,  especially :
 
-* `PHRASEANET_DOCKER_TAG` : tag of the Docker images. Set it to the tag you choose during the build phase. By defaut, it's set to `master`.
-* `VOLUMES_DIR` : the path you've chosen as volumes to store Phraseanet data on your host.
-* `INSTALL_ACCOUNT_EMAIL` : the email address that will be used for the fist account
-* `INSTALL_ACCOUNT_PASSWORD` : the according password
+* `PHRASEANET_DOCKER_TAG` : tag of the Docker images. Best practice is to choose a specific release e.g. `4.1.2` and not latest.
+* `PHRASEANET_ADMIN_ACCOUNT_EMAIL` : the email address that will be used for the fist account
+* `PHRASEANET_ADMIN_ACCOUNT_PASSWORD` : the according password
 * `PHRASEANET_APP_PORT` : the port of the HTTP application (default=8082)
-
-If you are not interested in the developpement of Phraseanet, you can ignore everything after the `DEV Purpose` annotation.
 
 You can set every parameters according to your preferences.
 
 ### Run the service
 
-To mount the service, go to the project root directory and run :
+To run the service, go to the project root directory and run :
 
-    docker-compose -f docker-compose.yml up -d
+    docker-compose up -d
 
-Why this option `-f docker-compose.yml` ?
+First start will take some time as databases will be created, and phraseanet setup is running.
+You can verify by looking at the logs 
 
-The development and integration concerns are separated using a `docker-compose.override.yml`. By default, `docker-compose` will include this files if it exists.
-
-If you don't work on phraseanet developpement, avoiding this `-f docker-compose.yml` parameters will throw errors. So you have to add this options on every `docker-compose` commands to avoid this inclusion.
-
-You can also delete the `docker-compose.override.yml` to get free from this behavior.
+    docker-compose logs
 
 ### Using the application
 
@@ -94,45 +76,16 @@ The default parameters allow you to reach the app with : `http://localhost:8082`
 
 Run the following command at the root directory level :
 
-    docker-compose -f docker-compose.yml logs -f
+    docker-compose logs -f
 
-### re-build application
-
-To apply the last configuration changes made on every side service (db, elaticsearch. etc), run :
-
-    docker-compose -f docker-compose.yml build
 
 ### Stop the application
 
 You can stop the application with :
 
-    docker-compose -f docker-compose.yml down
+    docker-compose down
 
 All your data will be kept for the next usage.
-
-
-### Development mode
-
-You need to mount your code onto the container via volumes
-The var ALCHEMY_WORKSPACE_DIR must be set to the location of your `Phraseanet` workspace.
-
-The developpement mode uses the `docker-compose-override.yml` file.
-
-You can run it with :
-
-    docker-compose up -d
-
-To get logs :
-
-    docker-compose logs -f
-
-
-The environment is not yet ready : you have to fetch all dependencies.
-
-This can be made easily from the phraseanet container :
-
-    docker-compose exec -u app phraseanet make
-
 
 # How to change volumes location
 
@@ -140,4 +93,4 @@ Before moving all the files, or to use a different location, you have to remove 
 
     docker-compose down --volumes
 
-Then move the files and set the `VOLUMES_DIR` to the new location.
+Then move the files and configure `.env` to the new location.
