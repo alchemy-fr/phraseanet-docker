@@ -3,7 +3,7 @@
 > [!WARNING]
 > This docker deployment is not maintained anymore and is not compliant with the latest Phraseanet versions
 > Please use the Docker and docker-Compose file included in the main Phraseanet repository
-    [here](https://github.com/alchemy-fr/Phraseanet).
+    [here](https://github.com/alchemy-fr/Phraseanet#phraseanet-41---digital-asset-management-application).
 >
 > 
 
