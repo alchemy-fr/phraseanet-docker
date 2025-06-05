@@ -1,3 +1,16 @@
+# This docker and Compose deployment from Phraseanet is deprecated
+
+> [!WARNING]
+> This docker deployment is not maintained anymore and is not compliant with the latest Phraseanet versions
+> Please use the Docker and docker-Compose file included in the main Phraseanet repository
+    [here](https://github.com/alchemy-fr/Phraseanet).
+>
+> 
+
+
+
+---
+
 # Phraseanet Docker stack
 
 This is an example Phraseanet docker-compose deployement for Phraseanet.
