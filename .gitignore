@@ -1,1 +1,6 @@
-.env
+*
+
+!.gitignore
+!README.md
+!.env
+!*/
