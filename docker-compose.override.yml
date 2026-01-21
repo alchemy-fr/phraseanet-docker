@@ -1,4 +1,10 @@
 version: "3.4"
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: $SUBNET_IPS
+
 services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -13,10 +19,19 @@ services:
         - alchemy_vol:/var/alchemy/Phraseanet
 
   phraseanet:
+    image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-fpm-xdebug:$PHRASEANET_DOCKER_TAG
+    ports:
+    - $XDEBUG_PHRASEANET_PORT:9000
     volumes:
       - alchemy_vol:/var/alchemy/Phraseanet
+    environment:
+    - XDEBUG_CONFIG=remote_enable=1 remote_host=${GATEWAY_IP} idekey=PHPSTORM
+    - XDEBUG_REMOTE_HOST=${GATEWAY_IP}
 
   worker:
+    image: $PHRASEANET_DOCKER_REGISTRY/phraseanet-worker-xdebug:$PHRASEANET_DOCKER_TAG
+    ports:
+    - $XDEBUG_WORKER_PORT:9000
     volumes:
       - alchemy_vol:/var/alchemy/Phraseanet
 
